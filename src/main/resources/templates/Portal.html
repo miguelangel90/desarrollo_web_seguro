@@ -6,5 +6,12 @@
 </head>
 <body>
  <!--Main portal of songs, only title displayed-->
+    <h1>Canciones subidas por los usuarios</h1>
+ {{#song}}
+    <a href="/Song/{{-index}}">{{name}}     {{album}}       {{author}}</a>
+ {{/song}}
+    <p></p>
+    <p></p>
+    <a href="/new/song">Subir una canci&oacuten</a>
 </body>
 </html>

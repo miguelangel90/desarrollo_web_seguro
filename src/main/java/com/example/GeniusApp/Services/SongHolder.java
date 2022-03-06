@@ -4,6 +4,7 @@ package com.example.GeniusApp.Services;
 import com.example.GeniusApp.Models.Song;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -16,5 +17,12 @@ public class SongHolder {
     public void addSong(Song song){
         long identification=id.incrementAndGet();
         songs.put(identification,song);
+    }
+    public Collection<Song> getAll(){
+        return songs.values();
+    }
+
+    public Song getSong(long id){
+        return songs.get(id);
     }
 }

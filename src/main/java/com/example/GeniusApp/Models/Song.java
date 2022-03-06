@@ -13,6 +13,7 @@ public class Song {
     private String name;
     private String author;
     private String album;
+    private String lyrics;
     private String url;     //URL to the song on YouTube
 
 
