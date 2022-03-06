@@ -1,4 +1,4 @@
-package com.example.GeniusApp;
+package com.example.GeniusApp.Controllers;
 
 
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.example.GeniusApp;
+package com.example.GeniusApp.Models;
 
 public class Coment {
 
