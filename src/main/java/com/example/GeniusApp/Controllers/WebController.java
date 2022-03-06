@@ -48,7 +48,7 @@ public class WebController {
 
     @GetMapping("/Song/{num}")
     public String showSong(Model model, @PathVariable int num){
-        Song song= songHolder.getSong(num-1);
+        Song song= songHolder.getSong(num);
         model.addAttribute("song",song);
         return "Song";
     }
