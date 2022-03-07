@@ -16,7 +16,8 @@ public class SongHolder {
 
     public void addSong(Song song){
         long identification=id.incrementAndGet();
-        songs.put(identification,song);
+        song.setId(identification);
+        songs.put(song.getId(),song);
     }
     public Collection<Song> getAll(){
         return songs.values();
@@ -24,5 +25,14 @@ public class SongHolder {
 
     public Song getSong(long id){
         return songs.get(id);
+    }
+
+    public void removeSong(long id){
+        songs.remove(id);
+    }
+
+    public void updateSong(long id, Song updateSong){
+        updateSong.setId(id);
+        songs.put(updateSong.getId(),updateSong);
     }
 }
