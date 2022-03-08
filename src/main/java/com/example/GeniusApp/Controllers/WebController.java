@@ -1,7 +1,9 @@
 package com.example.GeniusApp.Controllers;
 
 
+import com.example.GeniusApp.Models.Comment;
 import com.example.GeniusApp.Models.Song;
+import com.example.GeniusApp.Services.CommentHolder;
 import com.example.GeniusApp.Services.SongHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,9 @@ public class WebController {
 
     @Autowired
     SongHolder songHolder;
+
+    @Autowired
+    CommentHolder commentHolder;
 
     @GetMapping("")
     public String start(){
@@ -51,6 +56,12 @@ public class WebController {
         Song song= songHolder.getSong(num);
         model.addAttribute("song",song);
         return "Song";
+    }
+
+    @PostMapping("/new/comment")
+    public String addComment(Comment comment){
+        commentHolder.addComment(comment);
+        return "comment_success";
     }
 
     @PostMapping("/new/user")

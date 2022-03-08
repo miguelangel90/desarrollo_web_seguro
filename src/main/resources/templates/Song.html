@@ -11,6 +11,15 @@
     <p>Lyrics: {{song.lyrics}}</p>
     <p>Video: {{song.url}}</p>
 
+    <form method="post" action="/new/comment">
+        <p>Comentario: </p>
+        <textarea name='comment' rows=5 cols=40></textarea>
+        <input type="submit" name="Enviar">
+    </form>
+
     <a href="/songs">Volver al tabl&oacuten</a>
+
+    <a href="/comments">Comentarios</a>
+
 </body>
 </html>
