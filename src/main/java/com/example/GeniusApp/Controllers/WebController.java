@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -52,18 +53,13 @@ public class WebController {
     public String showSong(Model model, @PathVariable int num){
         Song song= songHolder.getSong(num);
         model.addAttribute("song",song);
+
         if (song.getComments()!=null){
-            System.out.println("Entro en if 1");
             if (!song.getComments().isEmpty()){
-                System.out.println("Entro en if 2");
                 model.addAttribute("comment",song.getComments().values());
             }
-            return "Song";
-        }else {
-            System.out.println("No entro en ningun if");
-            return "Song";
         }
-
+        return "Song";
     }
 
     @PostMapping("/new/comment/{songId}")
@@ -80,5 +76,18 @@ public class WebController {
     public String newUser(){
 
         return "user_success";
+    }
+
+    @GetMapping("/Song/delete/{Sid}/{Cid}")
+    public String deleteComment(Model model,@PathVariable Long Sid,@PathVariable Long Cid){
+        Song song =songHolder.getSong(Sid);
+        song.getCommentHolder().getComments().remove(Cid);
+        model.addAttribute("song",song);
+        if (song.getComments()!=null){
+            if (!song.getComments().isEmpty()){
+                model.addAttribute("comment",song.getComments().values());
+            }
+        }
+        return "Song";
     }
 }

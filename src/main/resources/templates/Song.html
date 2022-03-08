@@ -17,8 +17,10 @@
 
     <label>Secci&oacuten de Comentarios</label>
     {{#comment}}
-        <label>Etiqueta</label>
-        <p>Comentario {{-index}}: {{text}}</p>
+    <form action="/Song/delete/{{song.id}}/{{id}}" method="get">
+        <p>Comentario {{-index}}: {{text}} <input type="submit" name="Eliminar comentario">
+        </p>
+    </form>
     {{/comment}}
 
     <form method="post" action="/new/comment/{{song.id}}">
