@@ -9,11 +9,11 @@ public class Comment {
 
     private long id = -1;
     private String author;
-    private String comment;
-    private Song song;
+    private String text;
+
 
     public Comment(String comment){
-        this.comment = comment;
+        this.text = comment;
         this.author = author;
     }
 }

@@ -8,10 +8,7 @@ import com.example.GeniusApp.Services.SongHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -22,10 +19,10 @@ public class WebController {
 
     @Autowired
     SongHolder songHolder;
-
+/*
     @Autowired
     CommentHolder commentHolder;
-
+*/
     @GetMapping("")
     public String start(){
         return "Start";
@@ -55,12 +52,27 @@ public class WebController {
     public String showSong(Model model, @PathVariable int num){
         Song song= songHolder.getSong(num);
         model.addAttribute("song",song);
-        return "Song";
+        if (song.getComments()!=null){
+            System.out.println("Entro en if 1");
+            if (!song.getComments().isEmpty()){
+                System.out.println("Entro en if 2");
+                model.addAttribute("comment",song.getComments().values());
+            }
+            return "Song";
+        }else {
+            System.out.println("No entro en ningun if");
+            return "Song";
+        }
+
     }
 
-    @PostMapping("/new/comment")
-    public String addComment(Comment comment){
-        commentHolder.addComment(comment);
+    @PostMapping("/new/comment/{songId}")
+    public String addComment(Comment comment, @PathVariable Long songId){
+        //commentHolder.addComment(comment);
+        //Long myid=(Long)songId;
+
+        Song song=songHolder.getSong(songId);
+        song.addComment(comment);
         return "comment_success";
     }
 

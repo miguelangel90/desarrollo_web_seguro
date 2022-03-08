@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -15,6 +17,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @NoArgsConstructor
 
 public class Song {
+
+    @Autowired
+    CommentHolder commentHolder;
 
     private long id;
     private String name;
@@ -25,7 +30,6 @@ public class Song {
 
     //private Map <Long, Comment> comments = new ConcurrentHashMap<>();
 
-    private CommentHolder commentHolder;
 
     public Song(String name, String author,String album,String lyrics,String url){
         this.name = name;
@@ -36,7 +40,22 @@ public class Song {
     }
 
     public void addComment(Comment comment){
-        commentHolder.addComment(comment);
+        if(commentHolder!=null){
+            commentHolder.addComment(comment);
+        }else{
+            CommentHolder c=new CommentHolder();
+            c.addComment(comment);
+            this.commentHolder=c;
+        }
+
+    }
+
+    public Map getComments(){
+        if (commentHolder!=null){
+            return this.commentHolder.getComments();
+        }else{
+            return null;
+        }
     }
 
 

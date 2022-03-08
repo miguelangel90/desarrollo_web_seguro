@@ -11,9 +11,20 @@
     <p>Lyrics: {{song.lyrics}}</p>
     <p>Video: {{song.url}}</p>
 
-    <form method="post" action="/new/comment">
+
+    <p></p>
+    <p></p>
+
+    <label>Secci&oacuten de Comentarios</label>
+    {{#comment}}
+        <label>Etiqueta</label>
+        <p>Comentario {{-index}}: {{text}}</p>
+    {{/comment}}
+
+    <form method="post" action="/new/comment/{{song.id}}">
         <p>Comentario: </p>
         <textarea name='comment' rows=5 cols=40></textarea>
+        <!--<input type="hidden" name="song" value=song.id> -->
         <input type="submit" name="Enviar">
     </form>
 

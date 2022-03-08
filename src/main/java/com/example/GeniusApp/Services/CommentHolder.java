@@ -2,6 +2,9 @@ package com.example.GeniusApp.Services;
 
 import com.example.GeniusApp.Models.Comment;
 import com.example.GeniusApp.Models.Song;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,28 +13,24 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+@Data
+@AllArgsConstructor
 @Service
 public class CommentHolder {
 
-    @Autowired
-    SongHolder songHolder;
+    private Map<Long, Comment> comments;
+    private AtomicLong id;
 
-    private Map<Long, Comment> comments =new ConcurrentHashMap<>();
-    private AtomicLong id=new AtomicLong();
-    private long idSong;
-
-
-    public void setIdSong(long id){
-        idSong = id;
+    public CommentHolder(){
+        this.comments=new ConcurrentHashMap<>();
+        this.id=new AtomicLong();
     }
 
     public void addComment(Comment comment){
         long identification=id.incrementAndGet();
         comment.setId(identification);
-        Song song;
-        song = songHolder.getSong(idSong);
-        comment.setSong(song);
-        comment.getSong().addComment(comment);
+
+        comments.put(identification,comment);
     }
 
     /*public Collection<Comment> getAll(Song song){
