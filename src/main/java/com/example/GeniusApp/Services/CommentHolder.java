@@ -33,19 +33,18 @@ public class CommentHolder {
         comments.put(identification,comment);
     }
 
-    /*public Collection<Comment> getAll(Song song){
-        Map<Long, Comment> comments = getComments(song);
-        return comments.values();
+    public Comment getComment(long id){
+        Comment c = comments.get(id);
+        return c;
     }
 
 
-
-    public void removeSong(long id){
-        songs.remove(id);
+    public void removeComment(long id){
+        comments.remove(id);
     }
 
-    public void updateSong(long id, Song updateSong){
-        updateSong.setId(id);
-        songs.put(updateSong.getId(),updateSong);
-    }*/
+    public void updateComment(long id, Comment updateComment) {
+        updateComment.setId(id);
+        comments.put(updateComment.getId(), updateComment);
+    }
 }

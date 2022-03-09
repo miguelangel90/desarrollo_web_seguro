@@ -91,4 +91,12 @@ public class WebController {
         }
         return "Song";
     }
+
+    /*@GetMapping("/songs/delete/{Sid}")
+    public String deleteSong(Model model,@PathVariable Long Sid){
+        Song song =songHolder.getSong(Sid);
+        model.addAttribute("song",song);
+        songHolder.removeSong(Sid);
+        return "Portal";
+    }*/
 }

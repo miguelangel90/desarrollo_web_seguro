@@ -8,9 +8,9 @@
  <!--Main portal of songs, only title displayed-->
     <h1>Canciones subidas por los usuarios</h1>
  {{#song}}
- <p>
-    <a href="/Song/{{-index}}">{{name}}     {{album}}       {{author}}</a>
- </p>
+ <!--<form action="/songs/delete/{{id}}" method="get">-->
+     <p> <a href="/Song/{{-index}}">{{name}}     {{album}}       {{author}} </a> <!--<input type="submit" name="Delete">--> </p>
+ <!--</form>-->
  {{/song}}
     <p></p>
     <p></p>

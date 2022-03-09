@@ -58,5 +58,16 @@ public class Song {
         }
     }
 
+    public Comment getComment(long id){
+       return commentHolder.getComment(id);
+    }
+
+    public void removeComment(long id){
+        commentHolder.removeComment(id);
+    }
+
+    public void updateComment(long id, Comment comment){
+        commentHolder.updateComment(id,comment);
+    }
 
 }
