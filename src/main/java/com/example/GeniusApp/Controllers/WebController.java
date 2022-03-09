@@ -3,8 +3,10 @@ package com.example.GeniusApp.Controllers;
 
 import com.example.GeniusApp.Models.Comment;
 import com.example.GeniusApp.Models.Song;
+import com.example.GeniusApp.Models.Users.User;
 import com.example.GeniusApp.Services.CommentHolder;
 import com.example.GeniusApp.Services.SongHolder;
+import com.example.GeniusApp.Services.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +22,10 @@ public class WebController {
 
     @Autowired
     SongHolder songHolder;
-/*
+
     @Autowired
-    CommentHolder commentHolder;
-*/
+    UserHolder userHolder;
+
     @GetMapping("")
     public String start(){
         return "Start";
@@ -73,12 +75,6 @@ public class WebController {
         return "comment_success";
     }
 
-    @PostMapping("/new/user")
-    public String newUser(){
-
-        return "user_success";
-    }
-
     @GetMapping("/Song/delete/{Sid}/{Cid}")
     public String deleteComment(Model model,@PathVariable Long Sid,@PathVariable Long Cid){
         Song song =songHolder.getSong(Sid);
@@ -92,11 +88,23 @@ public class WebController {
         return "Song";
     }
 
-    /*@GetMapping("/songs/delete/{Sid}")
+    @GetMapping("/songs/delete/{Sid}")
     public String deleteSong(Model model,@PathVariable Long Sid){
         Song song =songHolder.getSong(Sid);
         model.addAttribute("song",song);
         songHolder.removeSong(Sid);
         return "Portal";
-    }*/
+    }
+
+    @GetMapping("/new/user")
+    public String register(){
+
+        return "Register";
+    }
+
+    @PostMapping("/new/user")
+    public String newUser(User user){
+        userHolder.addUser(user);
+        return "user_success";
+    }
 }

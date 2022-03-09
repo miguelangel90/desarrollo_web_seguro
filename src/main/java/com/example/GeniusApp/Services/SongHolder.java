@@ -18,7 +18,6 @@ public class SongHolder {
         long identification=id.incrementAndGet();
         song.setId(identification);
         songs.put(song.getId(),song);
-        //song.getCommentHolder().setIdSong(song.getId());  ///ESTO ES LO QUE DA ERROR
     }
     public Collection<Song> getAll(){
         return songs.values();
