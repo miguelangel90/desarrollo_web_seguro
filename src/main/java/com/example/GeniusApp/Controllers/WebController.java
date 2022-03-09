@@ -63,11 +63,12 @@ public class WebController {
     }
 
     @PostMapping("/new/comment/{songId}")
-    public String addComment(Comment comment, @PathVariable Long songId){
+    public String addComment(Model model, Comment comment, @PathVariable Long songId){
         //commentHolder.addComment(comment);
         //Long myid=(Long)songId;
 
         Song song=songHolder.getSong(songId);
+        model.addAttribute("song", song);
         song.addComment(comment);
         return "comment_success";
     }

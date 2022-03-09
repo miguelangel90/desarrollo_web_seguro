@@ -18,8 +18,8 @@
     <label>Secci&oacuten de Comentarios</label>
     {{#comment}}
     <form action="/Song/delete/{{song.id}}/{{id}}" method="get">
-        <p>Comentario {{-index}}: {{text}} <input type="submit" name="Eliminar comentario">
-        </p>
+        <p>Comentario {{-index}}: {{text}} <input type="submit" name="Delete"></p>
+
     </form>
     {{/comment}}
 
@@ -31,8 +31,6 @@
     </form>
 
     <a href="/songs">Volver al tabl&oacuten</a>
-
-    <a href="/comments">Comentarios</a>
 
 </body>
 </html>
