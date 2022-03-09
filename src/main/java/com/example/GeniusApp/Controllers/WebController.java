@@ -1,8 +1,11 @@
 package com.example.GeniusApp.Controllers;
 
 
+import com.example.GeniusApp.Models.Comment;
 import com.example.GeniusApp.Models.Song;
+import com.example.GeniusApp.Models.Users.User;
 import com.example.GeniusApp.Services.SongHolder;
+import com.example.GeniusApp.Services.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,12 +53,59 @@ public class WebController {
     public String showSong(Model model, @PathVariable int num){
         Song song= songHolder.getSong(num);
         model.addAttribute("song",song);
+
+        if (song.getComments()!=null){
+            if (!song.getComments().isEmpty()){
+                model.addAttribute("comment",song.getComments().values());
+            }
+        }
         return "Song";
     }
 
-    @PostMapping("/new/user")
-    public String newUser(){
+    @PostMapping("/new/comment/{songId}")
+    public String addComment(Model model, Comment comment, @PathVariable Long songId){
+        //commentHolder.addComment(comment);
+        //Long myid=(Long)songId;
 
+        Song song=songHolder.getSong(songId);
+        model.addAttribute("song", song);
+        song.addComment(comment);
+        return "comment_success";
+    }
+
+    @GetMapping("/Song/delete/{Sid}/{Cid}")
+    public String deleteComment(Model model,@PathVariable Long Sid,@PathVariable Long Cid){
+        Song song =songHolder.getSong(Sid);
+        song.getCommentHolder().getComments().remove(Cid);
+        model.addAttribute("song",song);
+        if (song.getComments()!=null){
+            if (!song.getComments().isEmpty()){
+                model.addAttribute("comment",song.getComments().values());
+            }
+        }
+        return "Song";
+    }
+
+    @GetMapping("/songs/delete/{Sid}")
+    public String deleteSong(Model model,@PathVariable Long Sid){
+        Song song =songHolder.getSong(Sid);
+        model.addAttribute("song",song);
+        songHolder.removeSong(Sid);
+        return "delete_success";
+    }
+
+    @Autowired
+    UserHolder userHolder;
+
+    @GetMapping("/new/user")
+    public String register(){
+
+        return "Register";
+    }
+
+    @PostMapping("/new/user")
+    public String newUser(User user){
+        userHolder.addUser(user);
         return "user_success";
     }
 }

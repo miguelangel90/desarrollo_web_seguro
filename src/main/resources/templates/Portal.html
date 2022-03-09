@@ -5,15 +5,20 @@
     <title>Genius</title>
 </head>
 <body>
- <!--Main portal of songs, only title displayed-->
+<!--Main portal of songs, only title displayed-->
     <h1>Canciones subidas por los usuarios</h1>
- {{#song}}
- <p>
-    <a href="/Song/{{-index}}">{{name}}     {{album}}       {{author}}</a>
- </p>
- {{/song}}
+    {{#song}}
+    <form action="/songs/delete/{{id}}" method="get">
+        <p> <a href="/Song/{{id}}">{{name}}     {{album}}       {{author}} </a> <input type="submit" name="Delete" value="Eliminar"> </p>
+    </form>
+    {{/song}}
     <p></p>
     <p></p>
     <a href="/new/song">Subir una canci&oacuten</a>
+
+    <p></p>
+    <p></p>
+    <a href="/">Volver a la pagina de inicio</a>
+
 </body>
 </html>
