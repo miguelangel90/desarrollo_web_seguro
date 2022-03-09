@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -69,5 +70,17 @@ public class Song {
     public void updateComment(long id, Comment comment){
         commentHolder.updateComment(id,comment);
     }
+
+
+    private String date;
+
+    public void addDate(Date date){     // Is a setter but we parse the String returned by Date class.
+        String s=date.toString();
+        int i=s.indexOf(":");
+        int j=s.indexOf(":",i+1);
+
+        this.setDate(s.substring(0,j));
+    }
+
 
 }
