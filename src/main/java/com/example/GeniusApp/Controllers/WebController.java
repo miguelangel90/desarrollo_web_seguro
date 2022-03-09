@@ -93,7 +93,7 @@ public class WebController {
         Song song =songHolder.getSong(Sid);
         model.addAttribute("song",song);
         songHolder.removeSong(Sid);
-        return "Portal";
+        return "delete_success";
     }
 
     @GetMapping("/new/user")
