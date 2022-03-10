@@ -1,0 +1,11 @@
+button{
+    color: white;
+    /*border-color: yellow;*/
+    background-color: #9640fa;
+    background-image: url(../images/register.png);
+    background-size: 500px;
+
+    width: 542px;
+    height: 116px;
+    opacity: 0.7;
+}
