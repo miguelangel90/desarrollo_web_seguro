@@ -5,6 +5,8 @@ body{
 }
 
 #container{
+    position: relative;
+    margin: 0px auto;
     width: 70%;
     border: 1px solid red;
 }
