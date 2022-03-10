@@ -2,30 +2,48 @@
 
 body{
     position: relative;
-    /*background: #9640fa;*/
-    font-family: Verdana,Arial;
     background-image: url(startbackground.jpg);
     background-size: 100%;
-    /*background-repeat: no-repeat;*/
-
-    height: auto;
-    width: auto;
-}
-/*
-#boton{
-    position: absolute;
-    left: 200px;
-    top:550px;
-}*/
-
-#boton1{
-    position: absolute;
-    top: 545px;
-    left: 420px;
 }
 
-#boton2{
+button{
+    color: white;
+    background-color: #9640fa;
+    background-position: center;
+    background-size: 500px;
+
+
+    width: 480px;
+    height: 85px;
+
+    border-radius: 50px;
+}
+
+#button{
+    background-image: url(../images/register.png);
+
     position: relative;
-    top:550px;
-    left: 750px;
+    top: 500px;
+    left: 100px;
+
+}
+
+#button1{
+
+    background-image: url(../images/sesion.png);
+
+    position: absolute;
+    top: 500px;
+    left: 300px;
+
+}
+
+#button2{
+
+    background-image: url(../images/anonimo.png);
+
+    position: absolute;
+    top: 500px;
+    left: 500px;
+
 }
