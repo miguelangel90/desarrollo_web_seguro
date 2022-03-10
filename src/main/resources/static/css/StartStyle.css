@@ -10,19 +10,19 @@ body{
 }
 
 #boton{
-    position: relative;
+    position: absolute;
     left: 200px;
     top:550px;
 }
 
 #boton1{
-    position: relative;
-    top: 550px;
-    left: 600px;
+    position: absolute;
+    top: 545px;
+    left: 420px;
 }
 
 #boton2{
     position: relative;
-    top:500px;
-    left: 1000px;
+    top:550px;
+    left: 750px;
 }
