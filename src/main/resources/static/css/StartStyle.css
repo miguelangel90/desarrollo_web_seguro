@@ -2,7 +2,7 @@
 
 body{
     position: relative;
-    background-image: url(startbackground.jpg);
+    background-image: url(../images/startbackground.jpg);
     background-size: 100%;
 }
 
