@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
-
+    <link rel="stylesheet" href="../css/login_register.css">
     <title>Genius</title>
 
     <!--<script>
@@ -22,16 +22,24 @@
     </script>-->
 </head>
 <body>
-<!-- To register a new user-->
-<form method="post" action="/new/user" name="register">
-    <p>Nombre de usuario: </p>
-    <input type="text" name="username" placeholder="Nombre de usuario">
-    <p>Contraseña: </p>
-    <input type="password" name="password" placeholder="Contraseña">
-    <p>Confirmar contraseña: </p>
-    <input type="password" name="pass" placeholder="Contraseña">
 
-    <input type="submit" name="Enviar">
-</form>
+<div class="container">
+    <header>
+        <h1>Registrate</h1>
+    </header>
+    <!-- To register a new user-->
+    <div class="hijo">
+        <form method="post" action="/new/user" name="register">
+            <p>Nombre de usuario: </p>
+            <input type="text" name="username" placeholder="Nombre de usuario">
+            <p>Contraseña: </p>
+            <input type="password" name="password" placeholder="Contraseña">
+            <p>Confirmar contraseña: </p>
+            <input type="password" name="pass" placeholder="Contraseña">
+            <p><input type="submit" name="Enviar"></p>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>
