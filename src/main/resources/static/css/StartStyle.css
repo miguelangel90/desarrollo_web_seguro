@@ -9,14 +9,20 @@ body{
     background-repeat: no-repeat;
 }
 
-.father{
+#boton{
     position: relative;
-    height: 350px;
-    width: 250px;
+    left: 200px;
+    top:550px;
 }
 
-.boton{
-    position: absolute;
-    left: 315px;
+#boton1{
+    position: relative;
+    top: 550px;
+    left: 600px;
+}
+
+#boton2{
+    position: relative;
     top:500px;
+    left: 1000px;
 }
