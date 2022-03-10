@@ -104,9 +104,14 @@ public class WebController {
     }
 
     @PostMapping("/new/user")
-    public String newUser(User user){
-        userHolder.addUser(user);
-        return "user_success";
+    public String newUser(User user, String pass){
+        if (userHolder.checkPassword(user,pass)){
+            userHolder.addUser(user);
+            return "user_success";
+        }else {
+            return "Register";
+        }
+
     }
 
     @GetMapping("/login")
@@ -115,8 +120,13 @@ public class WebController {
     }
 
     @PostMapping("/login")
-    public String loginSuccess(){
-        return "login_success";
+    public String loginSuccess(User user){
+        if (userHolder.checkUser(user)){
+            return "login_success";
+        }else{
+            return "login";
+        }
+
     }
 
 }
