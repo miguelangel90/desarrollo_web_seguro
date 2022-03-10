@@ -3,3 +3,8 @@ body{
     text-align: center;
     font-family: Verdana,Arial;
 }
+
+#container{
+    width: 70%;
+    border: 1px solid red;
+}

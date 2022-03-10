@@ -8,7 +8,8 @@
 </head>
 <body>
 <!--Main portal of songs, only title displayed-->
-    <section>
+<div id="container">
+    <section id="content">
         <h1>Canciones subidas por los usuarios</h1>
         {{#song}}
         <form action="/songs/delete/{{id}}" method="get">
@@ -19,13 +20,12 @@
         <p></p>
     </section>
     <aside>
-        <a href="/new/song">Subir una canci&oacuten</a>
-
+        <a href="/new/song">⬆️Subir una canci&oacuten ⬆️</a>
         <p></p>
         <p></p>
         <a href="/">Volver a la pagina de inicio</a>
     </aside>
-
+</div>
 
 </body>
 </html>
