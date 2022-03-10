@@ -16,8 +16,8 @@ public class UserHolder {
 
     public void addUser(User user){
         long identification=id.incrementAndGet();
-        user.setId(identification);
-        users.put(user.getId(),user);
+        //user.setId(identification);
+        users.put(identification,user);
     }
     public Collection<User> getAll(){
         return users.values();
@@ -29,6 +29,23 @@ public class UserHolder {
 
     public void removeUser(long id){
         users.remove(id);
+    }
+
+    public boolean checkUser(User user){
+        if (users.containsValue(user)) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean checkPassword(User user, String pass){
+        String userPass = user.getPassword();
+        if (userPass.equals(pass)){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /*public void updateSong(long id, User updateU){
