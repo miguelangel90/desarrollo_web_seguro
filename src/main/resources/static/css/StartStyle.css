@@ -1,12 +1,15 @@
 
 
 body{
-    /*position: relative;*/
-    background: #9640fa;
+    position: relative;
+    /*background: #9640fa;*/
     font-family: Verdana,Arial;
     background-image: url(startbackground.jpg);
     background-size: 100%;
-    background-repeat: no-repeat;
+    /*background-repeat: no-repeat;*/
+
+    height: auto;
+    width: auto;
 }
 /*
 #boton{
