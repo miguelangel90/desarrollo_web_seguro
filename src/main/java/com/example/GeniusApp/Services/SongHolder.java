@@ -35,6 +35,7 @@ public class SongHolder {
 
     public void updateSong(long id, Song updateSong){
         updateSong.setId(id);
+        updateSong.addDate(new Date());
         songs.put(updateSong.getId(),updateSong);
     }
 }
