@@ -108,4 +108,15 @@ public class WebController {
         userHolder.addUser(user);
         return "user_success";
     }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String loginSuccess(){
+        return "login_success";
+    }
+
 }
