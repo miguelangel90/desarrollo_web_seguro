@@ -83,7 +83,7 @@ public class WebController {
                 model.addAttribute("comment",song.getComments().values());
             }
         }
-        return "Song";
+        return "delete_comment";
     }
 
     @GetMapping("/songs/delete/{Sid}")
