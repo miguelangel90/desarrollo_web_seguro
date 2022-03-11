@@ -8,12 +8,10 @@ import lombok.NoArgsConstructor;
 public class Comment {
 
     private long id = -1;
-    private String author;
     private String text;
 
 
     public Comment(String comment){
         this.text = comment;
-        this.author = author;
     }
 }
