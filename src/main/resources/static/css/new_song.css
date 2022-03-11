@@ -1,14 +1,15 @@
+/*No spaces in container*/
 *{
     margin: 0;
     padding: 0;
 }
-
+/*Background and font*/
 body{
     background: #9640fa;
     text-align: center;
     font-family: Verdana,Arial;
 }
-
+/*Header style*/
 header{
     background: #84b644;
     height: 100px;
@@ -16,7 +17,7 @@ header{
     line-height: 100px;
     border-bottom: 2px dashed #000000;
 }
-
+/*Container box*/
 .container{
     position: relative;
     margin: 0px auto;
@@ -27,6 +28,7 @@ header{
     text-align: center;
     border: 3px solid yellowgreen;
 }
+/*Elements inside container*/
 
 .hijo{
     width:100%;
