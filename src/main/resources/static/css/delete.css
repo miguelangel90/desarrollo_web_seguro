@@ -1,0 +1,11 @@
+body{
+    position: relative;
+    background-color: #9640fa;
+    background-image: linear-gradient( #9640fa, #623fcb);
+    background-size: 100%;
+    color: white;
+}
+
+a{
+    color: white;
+}
