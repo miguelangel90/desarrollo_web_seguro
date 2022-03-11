@@ -3,18 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
-    <script src="https://cdn.ckeditor.com/ckeditor5/18.0.0/classic/ckeditor.js"></script>
 
+    <link rel="stylesheet" href="../css/songstyle.css">
+  
+  <script src="https://cdn.ckeditor.com/ckeditor5/18.0.0/classic/ckeditor.js"></script>
+  
     <title>{{song.name}}</title>
 </head>
 <body>
-    <p>Nombre: {{song.name}}</p>
-    <p>Autor: {{song.author}}</p>
-    <p>Album: {{song.album}}</p>
-    <p>Lyrics: {{song.lyrics}}</p>
-    <p>Video: {{song.url}}</p>
-    <p>Date: {{song.date}}</p>
-
+<div id="container">
+    <header>
+        <p>Nombre: {{song.name}}</p>
+    </header>
+    <div id="son">
+        <p>Autor: {{song.author}}</p>
+        <p>Album: {{song.album}}</p>
+        <p>Lyrics: {{song.lyrics}}</p>
+        <p>Video: {{song.url}}</p>
+        <p>Date: {{song.date}}</p>
     <p></p>
     <p></p>
 
@@ -32,15 +38,19 @@
         <!--<input type="hidden" name="song" value=song.id> -->
         <input type="submit" name="Enviar">
     </form>
+    </div>
 
-    <a href="/songs">Volver al tabl&oacuten</a>
-
-    <script>
+</div>
+    <footer>
+        <a href="/songs">Volver al tabl&oacuten</a>
+    </footer>
+  <script>
         ClassicEditor
             .create( document.querySelector( '#txtDescripcion' ) )
             .catch( error => {
                 console.error( error );
             } );
     </script>
+
 </body>
 </html>

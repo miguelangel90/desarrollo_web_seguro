@@ -1,0 +1,37 @@
+body{
+    background: #9640fa;
+    text-align: center;
+    font-family: Verdana,Arial;
+}
+
+#container{
+    position: relative;
+    background: #9db69c;
+    width: 500px;
+    height: 600px;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    margin: 0 0 0 -250px;
+    border: 3px solid yellowgreen;
+}
+
+header{
+    position: absolute;
+    font-weight: bold;
+    background: #84b644;
+    height: 100px;
+    width: 500px;
+    text-align: center;
+    line-height: 100px;
+    border-bottom: 2px dashed #000000;
+    margin: 0 auto;
+}
+
+#son{
+    position: absolute;
+    width:100%;
+    text-align: center;
+    left: 0;
+    top: 15%;
+}
