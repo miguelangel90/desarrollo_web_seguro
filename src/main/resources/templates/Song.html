@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
+
     <link rel="stylesheet" href="../css/songstyle.css">
+  
+  <script src="https://cdn.ckeditor.com/ckeditor5/18.0.0/classic/ckeditor.js"></script>
+  
     <title>{{song.name}}</title>
 </head>
 <body>
@@ -23,14 +27,14 @@
     <label>Secci&oacuten de Comentarios</label>
     {{#comment}}
     <form action="/Song/delete/{{song.id}}/{{id}}" method="get">
-        <p>Comentario {{-index}}: {{text}} <input type="submit" name="Delete" value="Eiminar"></p>
+        <p>Comentario {{-index}}: {{{text}}} <input type="submit" name="Delete" value="Eiminar"></p>
 
     </form>
     {{/comment}}
 
     <form method="post" action="/new/comment/{{song.id}}">
         <p>Comentario: </p>
-        <textarea name='comment' rows=5 cols=40></textarea>
+        <textarea name='comment' rows=5 cols=40 id="txtDescripcion"></textarea>
         <!--<input type="hidden" name="song" value=song.id> -->
         <input type="submit" name="Enviar">
     </form>
@@ -40,5 +44,13 @@
     <footer>
         <a href="/songs">Volver al tabl&oacuten</a>
     </footer>
+  <script>
+        ClassicEditor
+            .create( document.querySelector( '#txtDescripcion' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+
 </body>
 </html>
