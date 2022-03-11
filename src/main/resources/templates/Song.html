@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Shows song info-->
 <head>
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
@@ -23,7 +24,7 @@
         <p>Date: {{song.date}}</p>
     <p></p>
     <p></p>
-
+        <!-- Create a new comment-->
     <label>Secci&oacuten de Comentarios</label>
     {{#comment}}
     <form action="/Song/delete/{{song.id}}/{{id}}" method="get">
@@ -39,9 +40,9 @@
     </div>
 
 </div>
-    <footer>
-        <a href="/songs">Volver al tabl&oacuten</a>
-    </footer>
+<footer>
+    <a href="/songs">Volver al tabl&oacuten</a>
+</footer>
   <script>
         ClassicEditor
             .create( document.querySelector( '#txtDescripcion' ) )
