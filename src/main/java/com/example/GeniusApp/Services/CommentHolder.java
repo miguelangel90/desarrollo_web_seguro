@@ -26,6 +26,10 @@ public class CommentHolder {
         this.id=new AtomicLong();
     }
 
+    public Collection<Comment> getAll(){
+        return comments.values();
+    }
+
     public void addComment(Comment comment){
         long identification=id.incrementAndGet();
         comment.setId(identification);

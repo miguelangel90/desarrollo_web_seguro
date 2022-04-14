@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+
 
 @Data
 @NoArgsConstructor
@@ -26,6 +28,7 @@ public class Song {
     private String url;     //URL to the song on YouTube
 
     private String date;
+
 
     public void addDate(Date date){     // Is a setter but we parse the String returned by Date class.
          String s=date.toString();

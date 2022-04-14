@@ -5,6 +5,7 @@ import com.example.GeniusApp.Models.Users.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -16,7 +17,7 @@ public class UserHolder {
 
     public void addUser(User user){
         long identification=id.incrementAndGet();
-        //user.setId(identification);
+        user.setId(identification);
         users.put(identification,user);
     }
     public Collection<User> getAll(){
@@ -29,6 +30,11 @@ public class UserHolder {
 
     public void removeUser(long id){
         users.remove(id);
+    }
+
+    public void updateUser(long id, User user){
+        user.setId(id);
+        users.put(user.getId(),user);
     }
 
     public boolean checkUser(User user){
