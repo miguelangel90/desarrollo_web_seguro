@@ -1,8 +1,10 @@
 package com.example.GeniusApp.Controllers;
 
+
 import com.example.GeniusApp.Models.Song;
 import com.example.GeniusApp.Services.SongHolder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Collection;
 
+@Controller
 public class SongController {
     @Autowired
     SongHolder songHolder;
@@ -51,4 +54,13 @@ public class SongController {
         }
         return "Song";
     }
+
+    @GetMapping("/songs/delete/{Sid}")
+    public String deleteSong(Model model,@PathVariable Long Sid){
+        Song song =songHolder.getSong(Sid);
+        model.addAttribute("song",song);
+        songHolder.removeSong(Sid);
+        return "delete_success";
+    }
+
 }
