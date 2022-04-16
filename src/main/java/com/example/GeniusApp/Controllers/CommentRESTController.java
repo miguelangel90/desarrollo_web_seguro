@@ -21,8 +21,9 @@ public class CommentRESTController {
     CommentHolder commentHolder;
 
     @GetMapping("/songs/{id}/allcomments")
-    public ResponseEntity<Collection<Comment>> getAllCommnets(){
-        Collection<Comment> allUsers = commentHolder.getAll();
+    public ResponseEntity<Collection<Comment>> getAllCommnets(@PathVariable long id){
+        Song song = songHolder.getSong(id);
+        Collection<Comment> allUsers = song.getCommentHolder().getAll();
         if (allUsers != null) {
             return new ResponseEntity<>(allUsers, HttpStatus.OK);
         } else {
