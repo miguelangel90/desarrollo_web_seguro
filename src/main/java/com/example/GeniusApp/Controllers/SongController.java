@@ -1,8 +1,10 @@
 package com.example.GeniusApp.Controllers;
 
 import com.example.GeniusApp.Models.Song;
-import com.example.GeniusApp.Services.SongHolder;
+import com.example.GeniusApp.Services.SongRepository;
+import com.example.GeniusApp.Services.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,9 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Collection;
 
+@Controller
 public class SongController {
     @Autowired
-    SongHolder songHolder;
+    SongService songHolder;
+
+    @Autowired
+    SongRepository songRepository;
 
     @GetMapping("")
     public String start(){
@@ -21,9 +27,8 @@ public class SongController {
 
     @GetMapping("/songs")
     public String allsongs(Model model){
-        Collection<Song> songs=songHolder.getAll();
+        Collection<Song> songs = songRepository.findAll();
         model.addAttribute("song",songs);
-
         return "Portal";
     }
 
@@ -34,21 +39,23 @@ public class SongController {
 
     @PostMapping("/new/song")
     public String addSong(Song song){
-        songHolder.addSong(song);
-
+        songRepository.save(song);
         return "song_success";
     }
 
     @GetMapping("/Song/{num}")
-    public String showSong(Model model, @PathVariable int num){
-        Song song= songHolder.getSong(num);
+    public String showSong(Model model, @PathVariable long num){
+        Song song = songRepository.getById(num);
         model.addAttribute("song",song);
-
-        if (song.getComments()!=null){
-            if (!song.getComments().isEmpty()){
-                model.addAttribute("comment",song.getComments().values());
-            }
-        }
+        //model.addAttribute("comment",song.getComments());
         return "Song";
+    }
+
+    @GetMapping("/songs/delete/{Sid}")
+    public String deleteSong(Model model,@PathVariable Long Sid){
+        Song song = songRepository.getById(Sid);
+        model.addAttribute("song",song);
+        songRepository.delete(song);
+        return "delete_success";
     }
 }

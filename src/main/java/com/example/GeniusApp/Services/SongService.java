@@ -1,43 +1,47 @@
 package com.example.GeniusApp.Services;
 
 
+import com.example.GeniusApp.Models.Comment;
 import com.example.GeniusApp.Models.Song;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
-public class SongHolder {
-    private Map<Long, Song>songs=new ConcurrentHashMap<>();
-    private AtomicLong id=new AtomicLong();
+public class SongService {
+
+    @Autowired
+    CommentRepository commentRepository;
+
+    @Autowired
+    SongRepository songRepository;
 
     public void addSong(Song song){     // Stores a song in the holder, after giving it an id and date.
-        long identification=id.incrementAndGet();
-        song.setId(identification);
-        song.addDate(new Date());
-        songs.put(song.getId(),song);
+        //song.addDate(new Date());
+        songRepository.save(song);
     }
     public Collection<Song> getAll(){
-        return songs.values();
+        return songRepository.findAll();
     }
 
     public Song getSong(long id){
-        return songs.get(id);
+        return songRepository.getById(id);
     }
 
     public void removeSong(long id){
-        songs.remove(id);
+        songRepository.deleteById(id);
     }
 
     public void updateSong(long id, Song updateSong){
         updateSong.setId(id);
-        updateSong.addDate(new Date());
-        songs.put(updateSong.getId(),updateSong);
+        //updateSong.addDate(new Date());
+        songRepository.save(updateSong);
     }
-
 
 }

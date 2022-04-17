@@ -21,14 +21,14 @@
         <p>Album: {{song.album}}</p>
         <p>Lyrics: {{song.lyrics}}</p>
         <p>Video: {{song.url}}</p>
-        <p>Date: {{song.date}}</p>
+        <!--<p>Date: {{song.date}}</p>-->
     <p></p>
     <p></p>
-        <!-- Create a new comment-->
+         Create a new comment
     <label>Secci&oacuten de Comentarios</label>
     {{#comment}}
     <form action="/Song/delete/{{song.id}}/{{id}}" method="get">
-        <p>Comentario {{-index}}: {{{text}}} <input type="submit" name="Delete" value="Eiminar"></p>
+        <p>Comentario {{-index}}: {{text}} <input type="submit" name="Delete" value="Eiminar"></p>
     </form>
     {{/comment}}
 
