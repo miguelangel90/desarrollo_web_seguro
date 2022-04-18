@@ -1,6 +1,7 @@
 package com.example.GeniusApp.Models;
 
 
+
 import com.example.GeniusApp.Models.Users.User;
 import com.example.GeniusApp.Services.CommentRepository;
 import com.example.GeniusApp.Services.CommentService;
@@ -35,6 +36,8 @@ public class Song {
     @ManyToMany
     private List<User> users;
 
+
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> comments;
 
@@ -47,9 +50,6 @@ public class Song {
         String s=date.toString();
         int i=s.indexOf(":");
         int j=s.indexOf(":",i+1);
-
         this.setDate(s.substring(0,j));
     }
-
-
 }

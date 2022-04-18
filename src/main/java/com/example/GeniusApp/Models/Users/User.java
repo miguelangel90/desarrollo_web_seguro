@@ -6,9 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.h2.mvstore.Page;
 
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
+
 
 @Entity
 @Data
