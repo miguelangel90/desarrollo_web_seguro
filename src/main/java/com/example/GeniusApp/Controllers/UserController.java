@@ -1,7 +1,10 @@
 package com.example.GeniusApp.Controllers;
 
 import com.example.GeniusApp.Models.Users.User;
+
 import com.example.GeniusApp.Services.UserService;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +44,5 @@ public class UserController {
         }else{
             return "login";
         }
-
     }
 }

@@ -1,6 +1,8 @@
 package com.example.GeniusApp.Models;
 
 
+
+import com.example.GeniusApp.Models.Users.User;
 import com.example.GeniusApp.Services.CommentRepository;
 import com.example.GeniusApp.Services.CommentService;
 import lombok.AllArgsConstructor;
@@ -31,6 +33,9 @@ public class Song {
     private String url;     //URL to the song on YouTube
     private String date;
 
+    @ManyToMany
+    private List<User> users;
+
 
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -42,12 +47,9 @@ public class Song {
     }
 
     public void addDate(Date date){     // Is a setter but we parse the String returned by Date class.
-         String s=date.toString();
-         int i=s.indexOf(":");
-         int j=s.indexOf(":",i+1);
-
-         this.setDate(s.substring(0,j));
+        String s=date.toString();
+        int i=s.indexOf(":");
+        int j=s.indexOf(":",i+1);
+        this.setDate(s.substring(0,j));
     }
-
-
 }

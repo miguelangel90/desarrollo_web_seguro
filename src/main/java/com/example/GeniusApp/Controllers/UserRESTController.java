@@ -1,5 +1,6 @@
 package com.example.GeniusApp.Controllers;
 
+
 import com.example.GeniusApp.Models.Users.User;
 import com.example.GeniusApp.Services.UserRepository;
 import com.example.GeniusApp.Services.UserService;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+
 import java.util.List;
 
 @RestController
