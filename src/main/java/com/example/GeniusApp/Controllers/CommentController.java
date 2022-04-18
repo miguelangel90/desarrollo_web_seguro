@@ -26,7 +26,7 @@ public class CommentController {
     CommentService commentService;
 
     @PostMapping("/new/comment/{songId}")
-    public String addComment(Model model, Comment comment, @PathVariable Long songId){
+    public String addComment(Model model, @RequestParam Comment comment, @PathVariable Long songId){
         Song song=songRepository.getById(songId);
         model.addAttribute("song", song);
         commentService.addComment(song,comment);

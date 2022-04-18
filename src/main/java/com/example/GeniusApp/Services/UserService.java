@@ -1,44 +1,45 @@
 package com.example.GeniusApp.Services;
 
-import com.example.GeniusApp.Models.Song;
+
 import com.example.GeniusApp.Models.Users.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Date;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
+
+
+
 
 @Service
 public class UserService {
-    private Map<Long, User> users=new ConcurrentHashMap<>();
-    private AtomicLong id=new AtomicLong();
+
+    @Autowired
+    UserRepository userRepository;
 
     public void addUser(User user){
-        long identification=id.incrementAndGet();
-        user.setId(identification);
-        users.put(identification,user);
+        userRepository.save(user);
     }
     public Collection<User> getAll(){
-        return users.values();
+        return userRepository.findAll();
     }
 
     public User getUser(long id){
-        return users.get(id);
+        return userRepository.getById(id);
     }
 
     public void removeUser(long id){
-        users.remove(id);
+        userRepository.deleteById(id);
     }
 
     public void updateUser(long id, User user){
         user.setId(id);
-        users.put(user.getId(),user);
+        userRepository.save(user);
     }
 
     public boolean checkUser(User user){
-        if (users.containsValue(user)) {
+        Long id = user.getId();
+        User user2 = userRepository.getById(id);
+        if (user.equals(user2)){
             return true;
         }else{
             return false;

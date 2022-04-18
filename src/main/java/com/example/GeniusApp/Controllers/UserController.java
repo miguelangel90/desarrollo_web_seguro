@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class UserController {
     @Autowired
-    UserService userHolder;
+    UserService userService;
 
     @GetMapping("/new/user")
     public String register(){
@@ -20,8 +20,8 @@ public class UserController {
 
     @PostMapping("/new/user")
     public String newUser(User user, String pass){
-        if (userHolder.checkPassword(user,pass)){
-            userHolder.addUser(user);
+        if (userService.checkPassword(user,pass)){
+            userService.addUser(user);
             return "user_success";
         }else {
             return "Register";
@@ -36,7 +36,7 @@ public class UserController {
 
     @PostMapping("/login")
     public String loginSuccess(User user){
-        if (userHolder.checkUser(user)){
+        if (userService.checkUser(user)){
             return "login_success";
         }else{
             return "login";
