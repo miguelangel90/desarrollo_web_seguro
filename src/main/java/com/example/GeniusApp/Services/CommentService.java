@@ -40,9 +40,11 @@ public class CommentService {
         return comment;
     }
 
-    public void removeComment(long id) {
-        Comment comment = commentRepository.getById(id);
-        commentRepository.delete(comment);
+    public void removeComment(long cid, long sid) {
+        Song song = songRepository.getById(sid);
+        Comment comment = commentRepository.getById(cid);
+        song.getComments().remove(comment);
+        commentRepository.deleteById(cid);
     }
 
     public void updateComment(long id, Comment comment){
@@ -57,5 +59,11 @@ public class CommentService {
                 song.getComments().remove(c);
             }
         }
+    }
+
+    public void addComment(Song song, String comment){
+        Comment c = new Comment(comment);
+        song.getComments().add(c);
+        commentRepository.save(c);
     }
 }

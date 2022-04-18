@@ -26,7 +26,7 @@ public class CommentController {
     CommentService commentService;
 
     @PostMapping("/new/comment/{songId}")
-    public String addComment(Model model,  Comment comment, @PathVariable Long songId){
+    public String addComment(Model model, String comment, @PathVariable Long songId){
         Song song=songRepository.getById(songId);
         model.addAttribute("song", song);
         commentService.addComment(song,comment);
@@ -36,7 +36,7 @@ public class CommentController {
     @GetMapping("/Song/delete/{Sid}/{Cid}")
     public String deleteComment(Model model,@PathVariable Long Sid,@PathVariable Long Cid){
         Song song=songRepository.getById(Sid);
-        commentService.removeComment(Cid);
+        commentService.removeComment(Cid, Sid);
         model.addAttribute("song",song);
         if (song.getComments()!=null){
             if (!song.getComments().isEmpty()){
