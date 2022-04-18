@@ -23,7 +23,7 @@ public class SongService {
     SongRepository songRepository;
 
     public void addSong(Song song){     // Stores a song in the holder, after giving it an id and date.
-        //song.addDate(new Date());
+        song.addDate(new Date());
         songRepository.save(song);
     }
     public Collection<Song> getAll(){
@@ -40,7 +40,7 @@ public class SongService {
 
     public void updateSong(long id, Song updateSong){
         updateSong.setId(id);
-        //updateSong.addDate(new Date());
+        updateSong.addDate(new Date());
         songRepository.save(updateSong);
     }
 

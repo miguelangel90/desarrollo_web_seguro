@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 public class SongRESTController {
     @Autowired
-    SongService songHolder;
+    SongService songService;
 
     @Autowired
     SongRepository songRepository;
@@ -33,7 +33,7 @@ public class SongRESTController {
 
     @PostMapping("/song")
     public ResponseEntity<Song> create(@RequestBody Song song){
-        songRepository.save(song);
+        songService.addSong(song);
         return new ResponseEntity<>(song, HttpStatus.CREATED);
     }
 
@@ -127,12 +127,12 @@ public class SongRESTController {
         return query.setParameter("url", url).executeUpdate();
     }
 
-    @Transactional
+    /*@Transactional
     @PutMapping("/songs/{nombre}")
     public int updateSong(@PathVariable String nombre, @RequestBody Song updatedSong) {
         Query query = entityManager.createQuery
                 ("update Song s SET s.id=:id WHERE s.id = :id");
         return query.setParameter("nombre", nombre).executeUpdate();
-    }
+    }*/
 
 }

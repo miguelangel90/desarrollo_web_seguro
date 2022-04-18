@@ -26,8 +26,7 @@ public class CommentService {
     SongRepository songRepository;
 
     public void addComment(Song song, Comment comment){
-        List<Comment> comments = song.getComments();
-        comments.add(comment);
+        song.getComments().add(comment);
         commentRepository.save(comment);
     }
 

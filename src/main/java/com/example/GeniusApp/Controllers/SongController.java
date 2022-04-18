@@ -15,7 +15,7 @@ import java.util.Collection;
 @Controller
 public class SongController {
     @Autowired
-    SongService songHolder;
+    SongService songService;
 
     @Autowired
     SongRepository songRepository;
@@ -39,7 +39,7 @@ public class SongController {
 
     @PostMapping("/new/song")
     public String addSong(Song song){
-        songRepository.save(song);
+        songService.addSong(song);
         return "song_success";
     }
 
