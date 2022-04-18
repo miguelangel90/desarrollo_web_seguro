@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,16 +28,15 @@ public class User {
     private String username;
     private String password;
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Song> songs;
-
-    public User(String username, String password){
-        this.username = username;
-        this.password = password;
-    }
 
     @Override
     public String toString() {
         return "User{" + ", username='" + username + '\'' + ", password='" + password + '\'' + '}';
+    }
+
+    public void addSong(Song song){
+        this.songs.add(song);
     }
 }

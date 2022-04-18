@@ -15,12 +15,21 @@ import java.util.Set;
 public class UserService {
 
     private Set<String> registrados = new HashSet<>();
+    private User logueado;
 
     @Autowired
     UserRepository userRepository;
 
     public void addUser(User user){
         userRepository.save(user);
+    }
+
+    public User getLogueado(){
+        return logueado;
+    }
+
+    public void setLogueado(User user){
+        logueado=user;
     }
     public Collection<User> getAll(){
         return userRepository.findAll();

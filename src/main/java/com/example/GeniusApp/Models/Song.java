@@ -5,6 +5,7 @@ package com.example.GeniusApp.Models;
 import com.example.GeniusApp.Models.Users.User;
 import com.example.GeniusApp.Services.CommentRepository;
 import com.example.GeniusApp.Services.CommentService;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 @Data
@@ -33,7 +31,8 @@ public class Song {
     private String url;     //URL to the song on YouTube
     private String date;
 
-    @ManyToMany()
+
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<User> users;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -53,5 +52,9 @@ public class Song {
 
     public void updateLyrics(String lyrics){
         this.lyrics = lyrics;
+    }
+
+    public void addUser(User user){
+        this.users.add(user);
     }
 }

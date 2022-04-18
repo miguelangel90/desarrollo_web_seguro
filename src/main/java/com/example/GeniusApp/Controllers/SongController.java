@@ -2,8 +2,10 @@ package com.example.GeniusApp.Controllers;
 
 
 import com.example.GeniusApp.Models.Song;
+import com.example.GeniusApp.Models.Users.User;
 import com.example.GeniusApp.Services.SongRepository;
 import com.example.GeniusApp.Services.SongService;
+import com.example.GeniusApp.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,9 @@ public class SongController {
 
     @Autowired
     SongRepository songRepository;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("")
     public String start(){
@@ -69,6 +74,9 @@ public class SongController {
     public String update(Model model, @RequestParam String lyrics, @PathVariable Long Sid){
         Song song = songRepository.getById(Sid);
         songService.updateLyrics(Sid,lyrics);
+        User user = userService.getLogueado();
+        song.addUser(user);
+        user.addSong(song);
         model.addAttribute("song",song);
         return "lyrics_success";
     }

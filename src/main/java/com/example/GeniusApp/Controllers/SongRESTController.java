@@ -193,7 +193,7 @@ public class SongRESTController {
     }
 
     @Transactional
-    @PutMapping("/songsUpdateUrl/{lyrics}")
+    @PutMapping("/songsUpdateLyrics/{lyrics}")
     public int updateSongLyrics(@PathVariable String lyrics, @RequestBody Song updatedSong) {
         String nombre = updatedSong.getName();
         String album = updatedSong.getAlbum();
