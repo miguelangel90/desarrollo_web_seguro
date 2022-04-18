@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Date;
 import java.util.Map;
@@ -28,18 +29,25 @@ public class Song {
     private String album;
     private String lyrics;
     private String url;     //URL to the song on YouTube
-    //private String date;
+    private String date;
+
+
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> comments;
 
-    /*public void addDate(Date date){     // Is a setter but we parse the String returned by Date class.
+    public Collection<Comment> collectionComments(){
+        Collection<Comment> comments = this.getComments();
+        return comments;
+    }
+
+    public void addDate(Date date){     // Is a setter but we parse the String returned by Date class.
          String s=date.toString();
          int i=s.indexOf(":");
          int j=s.indexOf(":",i+1);
 
          this.setDate(s.substring(0,j));
-    }*/
+    }
 
 
 }

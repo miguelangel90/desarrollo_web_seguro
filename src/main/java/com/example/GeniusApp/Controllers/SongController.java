@@ -47,7 +47,7 @@ public class SongController {
     public String showSong(Model model, @PathVariable long num){
         Song song = songRepository.getById(num);
         model.addAttribute("song",song);
-        //model.addAttribute("comment",song.getComments());
+        model.addAttribute("comment",song.collectionComments());
         return "Song";
     }
 
