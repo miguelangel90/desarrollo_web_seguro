@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -17,7 +18,6 @@ public class UserController {
 
     @GetMapping("/new/user")
     public String register(){
-
         return "Register";
     }
 
@@ -29,7 +29,6 @@ public class UserController {
         }else {
             return "Register";
         }
-
     }
 
     @GetMapping("/login")
@@ -39,6 +38,7 @@ public class UserController {
 
     @PostMapping("/login")
     public String loginSuccess(User user){
+        //User user = new User(name,pass);
         if (userService.checkUser(user)){
             return "login_success";
         }else{

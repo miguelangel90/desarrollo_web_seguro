@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-
-
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Service
 public class UserService {
+
+    private Set<String> registrados = new HashSet<>();
 
     @Autowired
     UserRepository userRepository;
@@ -37,18 +40,21 @@ public class UserService {
     }
 
     public boolean checkUser(User user){
-        Long id = user.getId();
-        User user2 = userRepository.getById(id);
-        if (user.equals(user2)){
-            return true;
-        }else{
+        String username = user.getUsername();
+        String pass = user.getPassword();
+        User user2 = userRepository.findByUsernameAndPassword(username,pass);
+        if (user2==null){
             return false;
+        }else{
+            return true;
         }
     }
 
     public boolean checkPassword(User user, String pass){
+        String username =  user.getUsername();
         String userPass = user.getPassword();
-        if (userPass.equals(pass)){
+        if (userPass.equals(pass) && !registrados.contains(username)){
+            registrados.add(username);
             return true;
         }else{
             return false;

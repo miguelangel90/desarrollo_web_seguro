@@ -129,10 +129,9 @@ public class SongRESTController {
     }
 
     @Transactional
-    @PutMapping("/songsUpdate/{nombre}")
+    @PutMapping("/songsUpdateNombre/{nombre}")
     public int updateSong(@PathVariable String nombre, @RequestBody Song updatedSong) {
         String album = updatedSong.getAlbum();
-        String nameUpdated = updatedSong.getName();
         String autor = updatedSong.getAuthor();
         String lyrics = updatedSong.getLyrics();
         String url = updatedSong.getUrl();
@@ -142,9 +141,71 @@ public class SongRESTController {
         query.setParameter("autor", autor);
         query.setParameter("lyrics", lyrics);
         query.setParameter("url", url);
-        //query.setParameter("nombre", nameUpdated);
         return query.setParameter("nombre", nombre).executeUpdate();
     }
 
+    @Transactional
+    @PutMapping("/songsUpdateAlbum/{album}")
+    public int updateSongAlbum(@PathVariable String album, @RequestBody Song updatedSong) {
+        String nombre = updatedSong.getName();
+        String autor = updatedSong.getAuthor();
+        String lyrics = updatedSong.getLyrics();
+        String url = updatedSong.getUrl();
+        Query query = entityManager.createQuery
+                ("update Song s SET s.author = :autor, s.lyrics = :lyrics, s.url = :url, s.name = :nombre WHERE s.album = :album");
+        query.setParameter("nombre", nombre);
+        query.setParameter("autor", autor);
+        query.setParameter("lyrics", lyrics);
+        query.setParameter("url", url);
+        return query.setParameter("album", album).executeUpdate();
+    }
+
+    @Transactional
+    @PutMapping("/songsUpdateAutor/{autor}")
+    public int updateSongAutor(@PathVariable String autor, @RequestBody Song updatedSong) {
+        String nombre = updatedSong.getName();
+        String album = updatedSong.getAlbum();
+        String lyrics = updatedSong.getLyrics();
+        String url = updatedSong.getUrl();
+        Query query = entityManager.createQuery
+                ("update Song s SET s.album = :album, s.lyrics = :lyrics, s.url = :url, s.name = :nombre WHERE s.author = :autor");
+        query.setParameter("nombre", nombre);
+        query.setParameter("album", album);
+        query.setParameter("lyrics", lyrics);
+        query.setParameter("url", url);
+        return query.setParameter("autor", autor).executeUpdate();
+    }
+
+    @Transactional
+    @PutMapping("/songsUpdateUrl/{url}")
+    public int updateSongUrl(@PathVariable String url, @RequestBody Song updatedSong) {
+        String nombre = updatedSong.getName();
+        String album = updatedSong.getAlbum();
+        String lyrics = updatedSong.getLyrics();
+        String autor = updatedSong.getAuthor();
+        Query query = entityManager.createQuery
+                ("update Song s SET s.album = :album, s.lyrics = :lyrics, s.author = :autor, s.name = :nombre WHERE s.url = :url");
+        query.setParameter("nombre", nombre);
+        query.setParameter("album", album);
+        query.setParameter("lyrics", lyrics);
+        query.setParameter("autor", autor);
+        return query.setParameter("url", url).executeUpdate();
+    }
+
+    @Transactional
+    @PutMapping("/songsUpdateUrl/{lyrics}")
+    public int updateSongLyrics(@PathVariable String lyrics, @RequestBody Song updatedSong) {
+        String nombre = updatedSong.getName();
+        String album = updatedSong.getAlbum();
+        String url = updatedSong.getUrl();
+        String autor = updatedSong.getAuthor();
+        Query query = entityManager.createQuery
+                ("update Song s SET s.album = :album, s.url = :url, s.author = :autor, s.name = :nombre WHERE s.lyrics = :lyrics");
+        query.setParameter("nombre", nombre);
+        query.setParameter("album", album);
+        query.setParameter("url", url);
+        query.setParameter("autor", autor);
+        return query.setParameter("lyrics", lyrics).executeUpdate();
+    }
 }
 

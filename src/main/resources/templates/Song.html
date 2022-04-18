@@ -19,7 +19,10 @@
     <div id="son">
         <p>Autor: {{song.author}}</p>
         <p>Album: {{song.album}}</p>
-        <p>Lyrics: {{song.lyrics}}</p>
+        <form action="/songs/update/{{song.id}}" method="get" id="form">
+            <p>Lyrics: {{song.lyrics}}</p>
+            <input type="submit" name="Delete" value="Actualizar">
+        </form>
         <p>Video: {{song.url}}</p>
         <p>Date: {{song.date}}</p>
     <p></p>

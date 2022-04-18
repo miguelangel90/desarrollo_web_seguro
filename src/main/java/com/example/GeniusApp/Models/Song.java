@@ -33,10 +33,8 @@ public class Song {
     private String url;     //URL to the song on YouTube
     private String date;
 
-    @ManyToMany
+    @ManyToMany()
     private List<User> users;
-
-
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> comments;
@@ -51,5 +49,9 @@ public class Song {
         int i=s.indexOf(":");
         int j=s.indexOf(":",i+1);
         this.setDate(s.substring(0,j));
+    }
+
+    public void updateLyrics(String lyrics){
+        this.lyrics = lyrics;
     }
 }

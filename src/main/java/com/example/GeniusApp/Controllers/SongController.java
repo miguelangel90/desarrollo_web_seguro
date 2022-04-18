@@ -7,9 +7,7 @@ import com.example.GeniusApp.Services.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -58,5 +56,20 @@ public class SongController {
         model.addAttribute("song",song);
         songRepository.delete(song);
         return "delete_success";
+    }
+
+    @GetMapping("/songs/update/{Sid}")
+    public String updateSong(Model model,@PathVariable Long Sid){
+        Song song = songRepository.getById(Sid);
+        model.addAttribute("song",song);
+        return "update_lyrics";
+    }
+
+    @PostMapping("/new/lyrics/{Sid}")
+    public String update(Model model, @RequestParam String lyrics, @PathVariable Long Sid){
+        Song song = songRepository.getById(Sid);
+        songService.updateLyrics(Sid,lyrics);
+        model.addAttribute("song",song);
+        return "lyrics_success";
     }
 }
