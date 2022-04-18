@@ -130,18 +130,18 @@ public class SongRESTController {
     @Transactional
     @PutMapping("/songsUpdate/{nombre}")
     public int updateSong(@PathVariable String nombre, @RequestBody Song updatedSong) {
-        //String album = updatedSong.getAlbum();
-        //String name = updatedSong.getName();
+        String album = updatedSong.getAlbum();
+        String nameUpdated = updatedSong.getName();
         String autor = updatedSong.getAuthor();
         String lyrics = updatedSong.getLyrics();
-        //String url = updatedSong.getUrl();
+        String url = updatedSong.getUrl();
         Query query = entityManager.createQuery
-                ("update Song s SET s.author = :autor, s.lyrics = :lyrics WHERE s.name = :nombre");
-        //query.setParameter("album", album);
-        //query.setParameter("nombre", name);
+                ("update Song s SET s.author = :autor, s.lyrics = :lyrics, s.url = :url, s.album = :album WHERE s.name = :nombre");
+        query.setParameter("album", album);
         query.setParameter("autor", autor);
         query.setParameter("lyrics", lyrics);
-        //query.setParameter("url", url);
+        query.setParameter("url", url);
+        //query.setParameter("nombre", nameUpdated);
         return query.setParameter("nombre", nombre).executeUpdate();
     }
 
