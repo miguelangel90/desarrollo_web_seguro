@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @Controller
 public class SongController {
@@ -32,6 +33,7 @@ public class SongController {
     @GetMapping("/songs")
     public String allsongs(Model model){
         Collection<Song> songs = songRepository.findAll();
+        User u=(User)model.getAttribute("user");
         model.addAttribute("song",songs);
         return "Portal";
     }
@@ -53,6 +55,17 @@ public class SongController {
         model.addAttribute("song",song);
         model.addAttribute("comment",song.collectionComments());
         return "Song";
+    }
+
+    // Search a list of songs matching a set of parameters given
+    @PostMapping("/songs/search")
+    public String searchSong(Model model, @RequestParam String name, @RequestParam String author,
+                             @RequestParam String album){
+        List<Song> results=songService.searchSongs(name,album,author);
+
+        model.addAttribute("results",results);
+
+        return "search_results";
     }
 
     @GetMapping("/songs/delete/{Sid}")
