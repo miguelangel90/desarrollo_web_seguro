@@ -2,16 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/success.css">
     <title>Genius</title>
 </head>
 <body>
   <h1>Su búsqueda</h1>
     {{#results}}
-      <a href="/Song/{{id}}" id="songs">
-          {{name}} {{author}}
-      </a>
-
-
+        <p>
+            <a href="/Song/{{id}}" id="songs">
+              {{name}} {{author}}
+            </a>
+        </p>
     {{/results}}
+
+    {{^results}}
+        <h2>No hemos encontrado nada :(</h2>
+    {{/results}}
+
 </body>
 </html>
