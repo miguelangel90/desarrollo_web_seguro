@@ -66,6 +66,13 @@ public class SongRESTController {
         return query.setParameter("nombre", nombre).getResultList();
     }
 
+    @GetMapping("/songsNombre/{nombre}/{album}")
+    public List<Song> getSongNombreyAlbum(@PathVariable String nombre, @PathVariable String album) {
+        TypedQuery<Song> query = entityManager.createQuery
+                ("SELECT s from Song s WHERE s.name= :nombre", Song.class);
+        return query.setParameter("nombre", nombre).getResultList();
+    }
+
     @GetMapping("/songsAutor/{autor}")
     public List<Song> getSongAutor(@PathVariable String autor) {
         TypedQuery<Song> query = entityManager.createQuery
