@@ -55,19 +55,19 @@ public class SongService {
     }
 
     public List<Song> searchSongs(String name, String album, String author){
-        if (name != null && album == null && author == null){
+        if (name != "" && album == "" && author == ""){
             return songRepository.songsByNombre(name);
-        }else if (name == null && album != null && author == null){
+        }else if (name == "" && album != "" && author == ""){
             return songRepository.songsByAlbum(album);
-        }else if (name == null && album == null && author != null){
+        }else if (name == "" && album == "" && author != ""){
             return songRepository.songsByAutor(author);
-        }else if (name != null && album != null && author == null){
+        }else if (name != "" && album != "" && author == ""){
             return songRepository.songsByNombreAndAlbum(name,album);
-        }else if (name != null && album == null && author != null){
+        }else if (name != "" && album == "" && author != ""){
             return songRepository.songsByNombreAndAutor(name,author);
-        }else if (name == null && album != null && author != null){
+        }else if (name == "" && album != "" && author != ""){
             return songRepository.songsByAlbumAndAutor(album,author);
-        }else if (name != null && album != null && author != null){
+        }else if (name != "" && album != "" && author != ""){
             return songRepository.songsByAlbumAndAutorAndNombre(album,author,name);
         }else{
             return null;
