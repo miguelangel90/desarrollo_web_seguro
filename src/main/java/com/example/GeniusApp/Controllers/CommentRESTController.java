@@ -7,6 +7,7 @@ import com.example.GeniusApp.Services.CommentRepository;
 import com.example.GeniusApp.Services.CommentService;
 import com.example.GeniusApp.Services.SongRepository;
 import com.example.GeniusApp.Services.SongService;
+import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,8 @@ public class CommentRESTController {
     @PostMapping("/songs/{id}")
     public ResponseEntity<Comment> createComment(@PathVariable long id, @RequestBody Comment comment){
         Song song = songRepository.getById(id);
-        commentService.addComment(song,comment);
+
+        commentService.addComment(song,Sanitizers.FORMATTING.sanitize(comment.getText()));
         return new ResponseEntity<>(comment, HttpStatus.CREATED);
     }
 

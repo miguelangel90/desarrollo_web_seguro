@@ -8,6 +8,7 @@ import com.example.GeniusApp.Services.SongRepository;
 import com.example.GeniusApp.Services.SongService;
 
 
+import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +33,7 @@ public class CommentController {
     public String addComment(Model model, String comment, @PathVariable Long songId){
         Song song=songRepository.getById(songId);
         model.addAttribute("song", song);
-        commentService.addComment(song,comment);
+        commentService.addComment(song, Sanitizers.FORMATTING.sanitize(comment));
         return "comment_success";
     }
 
