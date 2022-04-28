@@ -7,6 +7,7 @@ import com.example.GeniusApp.Services.CommentRepository;
 import com.example.GeniusApp.Services.CommentService;
 import com.example.GeniusApp.Services.SongRepository;
 import com.example.GeniusApp.Services.SongService;
+import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

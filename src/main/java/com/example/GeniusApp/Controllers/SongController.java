@@ -5,6 +5,7 @@ import com.example.GeniusApp.Models.Song;
 import com.example.GeniusApp.Models.Users.User;
 import com.example.GeniusApp.Services.SongRepository;
 import com.example.GeniusApp.Services.SongService;
+import com.example.GeniusApp.Services.UserRepository;
 import com.example.GeniusApp.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class SongController {
@@ -24,6 +26,9 @@ public class SongController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping("")
     public String start(){
@@ -51,7 +56,7 @@ public class SongController {
 
     @GetMapping("/Song/{num}")
     public String showSong(Model model, @PathVariable long num){
-        Song song = songRepository.getById(num);
+        Song song = new Song(songRepository.getById(num));
         model.addAttribute("song",song);
         model.addAttribute("comment",song.collectionComments());
         return "Song";
@@ -85,11 +90,13 @@ public class SongController {
 
     @PostMapping("/new/lyrics/{Sid}")
     public String update(Model model, @RequestParam String lyrics, @PathVariable Long Sid){
-        Song song = songRepository.getById(Sid);
         songService.updateLyrics(Sid,lyrics);
         User user = userService.getLogueado();
+        Song song = new Song(songRepository.getById(Sid));
         song.addUser(user);
+        songRepository.save(song);
         user.addSong(song);
+        userRepository.save(user);
         model.addAttribute("song",song);
         return "lyrics_success";
     }

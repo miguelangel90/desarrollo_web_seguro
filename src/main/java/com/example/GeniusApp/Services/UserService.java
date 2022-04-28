@@ -51,7 +51,7 @@ public class UserService {
     public boolean checkUser(User user){
         String username = user.getUsername();
         String pass = user.getPassword();
-        User user2 = userRepository.findByUsernameAndPassword(username,pass);
+        User user2 = userRepository.getByUsernameAndPassword(username,pass);
         if (user2==null){
             return false;
         }else{

@@ -6,6 +6,7 @@ import com.example.GeniusApp.Models.Users.User;
 import com.example.GeniusApp.Services.CommentRepository;
 import com.example.GeniusApp.Services.CommentService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,12 +32,24 @@ public class Song {
     private String url;     //URL to the song on YouTube
     private String date;
 
-
-    @ManyToMany(cascade = CascadeType.ALL)
+    @JsonView
+    @ManyToMany
     private List<User> users;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> comments;
+
+    public Song(Song song){
+        this.id = song.getId();
+        this.name = song.getName();
+        this.author = song.getAuthor();
+        this.album = song.getAlbum();
+        this.lyrics = song.getLyrics();
+        this.url = song.getUrl();
+        this.date = song.getDate();
+        this.users = song.getUsers();
+        this.comments =  song.getComments();
+    }
 
     public Collection<Comment> collectionComments(){
         Collection<Comment> comments = this.getComments();

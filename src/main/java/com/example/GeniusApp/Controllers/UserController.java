@@ -2,6 +2,7 @@ package com.example.GeniusApp.Controllers;
 
 import com.example.GeniusApp.Models.Users.User;
 
+import com.example.GeniusApp.Services.UserRepository;
 import com.example.GeniusApp.Services.UserService;
 
 
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping("/new/user")
     public String register(){
@@ -41,8 +45,10 @@ public class UserController {
     @PostMapping("/login")
     public String loginSuccess(Model model, User user){
         if (userService.checkUser(user)){
-            model.addAttribute("user", user);
-            userService.setLogueado(user);
+            User user2 = userRepository.getByUsernameAndPassword(user.getUsername(),user.getPassword());
+            model.addAttribute("user", user2);
+            userService.setLogueado(user2);
+            userRepository.save(user2);
             return "login_success";
         }else{
             return "login";

@@ -1,6 +1,7 @@
 package com.example.GeniusApp.Controllers;
 
 
+import com.example.GeniusApp.Models.Comment;
 import com.example.GeniusApp.Models.Users.User;
 import com.example.GeniusApp.Services.UserRepository;
 import com.example.GeniusApp.Services.UserService;
@@ -9,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.Collection;
 
 import java.util.List;
@@ -22,6 +25,9 @@ public class UserRESTController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    EntityManager entityManager;
+
     @GetMapping("/allusers")
     public List<User> getAll(){
         return userRepository.findAll();
@@ -34,13 +40,10 @@ public class UserRESTController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<User> getUser(@PathVariable long id) {
-        User user = userService.getUser(id);
-        if (user != null) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public User getUser(@PathVariable long id) {
+        TypedQuery<User> query = entityManager.createQuery
+                ("SELECT u FROM User u WHERE u.id= :id", User.class);
+        return query.setParameter("id", id).getSingleResult();
     }
 
     @DeleteMapping("/users/{id}")
