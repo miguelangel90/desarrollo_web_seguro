@@ -32,6 +32,11 @@ public class SongRESTController {
         return songRepository.findAll();
     }
 
+    @GetMapping("filter/{nombre}/{album}/{autor}")
+    public List<Song> getByFilter(@PathVariable String nombre, @PathVariable String album, @PathVariable String autor){
+        return songService.searchSongs(nombre,album,autor);
+    }
+
     @PostMapping("/song")
     public ResponseEntity<Song> create(@RequestBody Song song){
         songService.addSong(song);
