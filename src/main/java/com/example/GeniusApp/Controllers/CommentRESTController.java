@@ -47,7 +47,8 @@ public class CommentRESTController {
     @PostMapping("/songs/{id}")
     public ResponseEntity<Comment> createComment(@PathVariable long id, @RequestBody Comment comment){
         Song song = songRepository.getById(id);
-        commentService.addComment(song,comment);
+
+        commentService.addComment(song,Sanitizers.FORMATTING.sanitize(comment.getText()));
         return new ResponseEntity<>(comment, HttpStatus.CREATED);
     }
 
