@@ -32,21 +32,16 @@ public class CommentRESTController {
     @Autowired
     CommentService commentService;
 
-    @Autowired
-    CommentRepository commentRepository;
-
-    @Autowired
-    SongRepository songRepository;
 
     @GetMapping("/songs/{id}/allcomments")
     public List<Comment> getAllCommnets(@PathVariable long id){
-        Song song = songRepository.getById(id);
+        Song song = songService.getSong(id);
         return commentService.getComments(song);
     }
 
     @PostMapping("/songs/{id}")
     public ResponseEntity<Comment> createComment(@PathVariable long id, @RequestBody Comment comment){
-        Song song = songRepository.getById(id);
+        Song song = songService.getSong(id);
 
         commentService.addComment(song,Sanitizers.FORMATTING.sanitize(comment.getText()));
         return new ResponseEntity<>(comment, HttpStatus.CREATED);
@@ -61,43 +56,25 @@ public class CommentRESTController {
 
     @GetMapping("/songs/{sid}/contiene/{string}")
     public List<Comment> getComment2(@PathVariable long sid,@PathVariable String string) {
-        return commentRepository.findCommentsByTextContains(string);
+        return commentService.getCommentByText(string);
     }
 
     @Transactional
     @DeleteMapping("/songs/{sid}/{cid}")
     public void deleteComment(@PathVariable long sid, @PathVariable long cid) {
-        /*Query query = entityManager.createQuery
-                ("DELETE FROM Comment c WHERE c.id = :cid");
-        return query.setParameter("cid", cid).executeUpdate();*/
-        Song song = songRepository.getById(sid);
-        Comment comment = commentRepository.getById(cid);
+        Song song = songService.getSong(sid);
+        Comment comment = commentService.getComment(cid);
         song.getComments().size();
         song.getComments().remove(comment);
-        commentRepository.deleteById(cid);
+        commentService.removeComment(cid,sid);
     }
 
     @Transactional
     @DeleteMapping("/songs/{sid}/comentario/{text}")
     public void deleteCommentByText(@PathVariable long sid, @PathVariable String text) {
-        /*Query query = entityManager.createQuery
-                ("DELETE FROM Comment c WHERE c.text = :text");
-        return query.setParameter("text", text).executeUpdate();*/
-        Song song = songRepository.getById(sid);
+        Song song = songService.getSong(sid);
         song.getComments().size();
         commentService.removeCommentByText(text,sid);
-        commentRepository.deleteByText(text);
     }
-
-    /*@PutMapping("/songs/{sid}/{cid}")
-    public ResponseEntity<Comment> updateComment(@PathVariable long sid, @PathVariable long cid, @RequestBody Comment updatedComment) {
-        Song song = songHolder.getSong(sid);
-        if (song != null) {
-            song.updateComment(cid, updatedComment);
-            return new ResponseEntity<>(updatedComment, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }*/
 
 }

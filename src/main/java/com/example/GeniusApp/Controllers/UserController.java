@@ -13,13 +13,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.annotation.PostConstruct;
+
 @Controller
 public class UserController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    UserRepository userRepository;
+    /*@PostConstruct
+    public void init(){
+        User u1 = new User("username", "pass");
+        userService.addUser(u1);
+    }*/
 
     @GetMapping("/new/user")
     public String register(){
@@ -45,10 +50,10 @@ public class UserController {
     @PostMapping("/login")
     public String loginSuccess(Model model, User user){
         if (userService.checkUser(user)){
-            User user2 = userRepository.getByUsernameAndPassword(user.getUsername(),user.getPassword());
+            User user2 = userService.getUserByUsernameAndPassword(user.getUsername(),user.getPassword());
             model.addAttribute("user", user2);
             userService.setLogueado(user2);
-            userRepository.save(user2);
+            userService.addUser(user2);
             return "login_success";
         }else{
             return "login";

@@ -21,6 +21,7 @@ public class UserService {
     UserRepository userRepository;
 
     public void addUser(User user){
+        this.registrados.add(user.getUsername());
         userRepository.save(user);
     }
 
@@ -31,7 +32,7 @@ public class UserService {
     public void setLogueado(User user){
         logueado=user;
     }
-    public Collection<User> getAll(){
+    public List<User> getAll(){
         return userRepository.findAll();
     }
 
@@ -46,6 +47,10 @@ public class UserService {
     public void updateUser(long id, User user){
         user.setId(id);
         userRepository.save(user);
+    }
+
+    public User getUserByUsernameAndPassword(String username, String pass){
+        return userRepository.getByUsernameAndPassword(username,pass);
     }
 
     public boolean checkUser(User user){

@@ -23,14 +23,11 @@ public class UserRESTController {
     UserService userService;
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
     EntityManager entityManager;
 
     @GetMapping("/allusers")
     public List<User> getAll(){
-        return userRepository.findAll();
+        return userService.getAll();
     }
 
     @PostMapping("/users")

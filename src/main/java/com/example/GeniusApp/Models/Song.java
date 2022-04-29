@@ -39,6 +39,14 @@ public class Song {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> comments;
 
+    public Song (String nombre, String autor, String album, String lyrics, String url){
+        this.name = nombre;
+        this.author = autor;
+        this.album = album;
+        this.lyrics = lyrics;
+        this.url = url;
+    }
+
     public Song(Song song){
         this.id = song.getId();
         this.name = song.getName();

@@ -24,14 +24,11 @@ public class CommentController {
     SongService songService;
 
     @Autowired
-    SongRepository songRepository;
-
-    @Autowired
     CommentService commentService;
 
     @PostMapping("/new/comment/{songId}")
     public String addComment(Model model, String comment, @PathVariable Long songId){
-        Song song=songRepository.getById(songId);
+        Song song=songService.getSong(songId);
         model.addAttribute("song", song);
         commentService.addComment(song, Sanitizers.FORMATTING.sanitize(comment));
         return "comment_success";
@@ -39,7 +36,7 @@ public class CommentController {
 
     @GetMapping("/Song/delete/{Sid}/{Cid}")
     public String deleteComment(Model model,@PathVariable Long Sid,@PathVariable Long Cid){
-        Song song=songRepository.getById(Sid);
+        Song song=songService.getSong(Sid);
         commentService.removeComment(Cid, Sid);
         model.addAttribute("song",song);
         if (song.getComments()!=null){

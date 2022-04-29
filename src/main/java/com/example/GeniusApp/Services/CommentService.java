@@ -59,11 +59,16 @@ public class CommentService {
                 song.getComments().remove(c);
             }
         }
+        commentRepository.deleteByText(text);
     }
 
     public void addComment(Song song, String comment){
         Comment c = new Comment(comment);
         song.getComments().add(c);
         commentRepository.save(c);
+    }
+
+    public List<Comment> getCommentByText(String text){
+        return commentRepository.findCommentsByTextContains(text);
     }
 }

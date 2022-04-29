@@ -30,7 +30,7 @@ public class SongService {
         song.addDate(new Date());
         songRepository.save(song);
     }
-    public Collection<Song> getAll(){
+    public List<Song> getAll(){
         return songRepository.findAll();
     }
 
@@ -38,8 +38,12 @@ public class SongService {
         return songRepository.getById(id);
     }
 
-    public void removeSong(long id){
+    public void removeSongById(long id){
         songRepository.deleteById(id);
+    }
+
+    public void removeSong(Song song){
+        songRepository.delete(song);
     }
 
     public void updateSong(long id, Song updateSong){

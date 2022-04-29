@@ -1,18 +1,18 @@
 package com.example.GeniusApp.Controllers;
 
 
+import com.example.GeniusApp.Models.Comment;
 import com.example.GeniusApp.Models.Song;
 import com.example.GeniusApp.Models.Users.User;
-import com.example.GeniusApp.Services.SongRepository;
-import com.example.GeniusApp.Services.SongService;
-import com.example.GeniusApp.Services.UserRepository;
-import com.example.GeniusApp.Services.UserService;
+import com.example.GeniusApp.Services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,13 +22,10 @@ public class SongController {
     SongService songService;
 
     @Autowired
-    SongRepository songRepository;
+    CommentService commentService;
 
     @Autowired
     UserService userService;
-
-    @Autowired
-    UserRepository userRepository;
 
     @GetMapping("")
     public String start(){
@@ -37,7 +34,7 @@ public class SongController {
 
     @GetMapping("/songs")
     public String allsongs(Model model){
-        Collection<Song> songs = songRepository.findAll();
+        Collection<Song> songs = songService.getAll();
         User u=(User)model.getAttribute("user");
         model.addAttribute("song",songs);
         return "Portal";
@@ -56,7 +53,7 @@ public class SongController {
 
     @GetMapping("/Song/{num}")
     public String showSong(Model model, @PathVariable long num){
-        Song song = new Song(songRepository.getById(num));
+        Song song = new Song(songService.getSong(num));
         model.addAttribute("song",song);
         model.addAttribute("comment",song.collectionComments());
         return "Song";
@@ -75,15 +72,15 @@ public class SongController {
 
     @GetMapping("/songs/delete/{Sid}")
     public String deleteSong(Model model,@PathVariable Long Sid){
-        Song song = songRepository.getById(Sid);
+        Song song = songService.getSong(Sid);
         model.addAttribute("song",song);
-        songRepository.delete(song);
+        songService.removeSongById(Sid);
         return "delete_success";
     }
 
     @GetMapping("/songs/update/{Sid}")
     public String updateSong(Model model,@PathVariable Long Sid){
-        Song song = songRepository.getById(Sid);
+        Song song = songService.getSong(Sid);
         model.addAttribute("song",song);
         return "update_lyrics";
     }
@@ -92,11 +89,11 @@ public class SongController {
     public String update(Model model, @RequestParam String lyrics, @PathVariable Long Sid){
         songService.updateLyrics(Sid,lyrics);
         User user = userService.getLogueado();
-        Song song = new Song(songRepository.getById(Sid));
+        Song song = new Song(songService.getSong(Sid));
         song.addUser(user);
-        songRepository.save(song);
+        songService.addSong(song);
         user.addSong(song);
-        userRepository.save(user);
+        userService.addUser(user);
         model.addAttribute("song",song);
         return "lyrics_success";
     }

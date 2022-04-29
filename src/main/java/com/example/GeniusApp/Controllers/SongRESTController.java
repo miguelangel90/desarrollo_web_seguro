@@ -1,7 +1,9 @@
 package com.example.GeniusApp.Controllers;
 
+import com.example.GeniusApp.Models.Comment;
 import com.example.GeniusApp.Models.Song;
 
+import com.example.GeniusApp.Services.CommentService;
 import com.example.GeniusApp.Services.SongRepository;
 import com.example.GeniusApp.Services.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -22,14 +25,14 @@ public class SongRESTController {
     SongService songService;
 
     @Autowired
-    SongRepository songRepository;
+    CommentService commentService;
 
     @Autowired
     EntityManager entityManager;
 
     @GetMapping("/allsongs")
     public List<Song> getAllSongs(){
-        return songRepository.findAll();
+        return songService.getAll();
     }
 
     @GetMapping("filter/{nombre}/{album}/{autor}")
