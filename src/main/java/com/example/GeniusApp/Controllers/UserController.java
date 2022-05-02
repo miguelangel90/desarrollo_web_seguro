@@ -47,6 +47,11 @@ public class UserController {
         return "login";
     }
 
+    @GetMapping("/login_success")
+    public String success(){
+        return "login_success";
+    }
+
     @PostMapping("/login")
     public String loginSuccess(Model model, User user){
         if (userService.checkUser(user)){
