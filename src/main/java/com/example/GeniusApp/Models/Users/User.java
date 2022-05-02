@@ -35,9 +35,26 @@ public class User {
     @ManyToMany
     private List<Song> songs = new ArrayList<>();
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
+
     public User(String username, String password){
         this.username = username;
         this.password = password;
+    }
+
+    public User(String username, String password, String role){
+        this.username = username;
+        this.password = password;
+        this.roles.add(role);
+    }
+
+    public User(String username, String password, String role, String role2){
+        this.username = username;
+        this.password = password;
+        this.roles.add(role);
+        this.roles.add(role2);
     }
 
     @Override

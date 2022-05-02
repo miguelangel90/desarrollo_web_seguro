@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,7 @@ public class SongController {
 
     @GetMapping("")
     public String start(){
+        userService.init();
         return "Start";
     }
 
@@ -96,5 +98,12 @@ public class SongController {
         userService.addUser(user);
         model.addAttribute("song",song);
         return "lyrics_success";
+    }
+
+    @GetMapping("/pruebaRoles")
+    public String roles(Model model, HttpServletRequest request){
+        model.addAttribute("username", request.getUserPrincipal().getName());
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
+        return "prueba_roles";
     }
 }

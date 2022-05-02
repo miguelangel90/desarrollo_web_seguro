@@ -3,6 +3,7 @@ package com.example.GeniusApp.Services;
 
 import com.example.GeniusApp.Models.Users.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -20,7 +21,17 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public void init(){
+        User u1 = new User("user", passwordEncoder.encode("pass"), "USER");
+        userRepository.save(u1);
+        userRepository.save(new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
+    }
+
     public void addUser(User user){
+        user = new User(user.getUsername(),passwordEncoder.encode(user.getPassword()),"USER");
         this.registrados.add(user.getUsername());
         userRepository.save(user);
     }
