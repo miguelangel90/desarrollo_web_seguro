@@ -30,7 +30,7 @@ public class SongController {
 
     @GetMapping("")
     public String start(){
-        userService.init();
+        //userService.init();
         return "Start";
     }
 

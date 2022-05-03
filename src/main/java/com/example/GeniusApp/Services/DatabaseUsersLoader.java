@@ -15,9 +15,9 @@ public class DatabaseUsersLoader {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    /*@PostConstruct
+    @PostConstruct
     private void initDatabase() {
         userRepository.save(new User("user", passwordEncoder.encode("pass"), "USER"));
         userRepository.save(new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
-    }*/
+    }
 }
