@@ -37,9 +37,28 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/new/user").permitAll();
         http.authorizeRequests().antMatchers("/login").permitAll();
 
+        // Css templates
+        http.authorizeRequests().antMatchers("/css/delete.css").permitAll();
+        http.authorizeRequests().antMatchers("/css/ErrorStyle.css").permitAll();
+        http.authorizeRequests().antMatchers("/css/login_register.css").permitAll();
+        http.authorizeRequests().antMatchers("/css/new_song.css").permitAll();
+        http.authorizeRequests().antMatchers("/css/portalstyle.css").permitAll();
+        http.authorizeRequests().antMatchers("/css/songstyle.css").permitAll();
+        http.authorizeRequests().antMatchers("/css/StartStyle.css").permitAll();
+        http.authorizeRequests().antMatchers("/css/success.css").permitAll();
+
+        // Images
+        http.authorizeRequests().antMatchers("/images/anonimo.png").permitAll();
+        http.authorizeRequests().antMatchers("/images/backgorund.jpeg").permitAll();
+        http.authorizeRequests().antMatchers("/images/button.png").permitAll();
+        http.authorizeRequests().antMatchers("/images/logo.png").permitAll();
+        http.authorizeRequests().antMatchers("/images/register.png").permitAll();
+        http.authorizeRequests().antMatchers("/images/sesion.png").permitAll();
+        http.authorizeRequests().antMatchers("/images/startbackground.jpg").permitAll();
+
 // Private pages (all other pages)
         http.authorizeRequests().antMatchers("/new/song").hasAnyRole("USER");
-        //http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().anyRequest().authenticated();
 
 // Login form
         http.formLogin().loginPage("/login");
