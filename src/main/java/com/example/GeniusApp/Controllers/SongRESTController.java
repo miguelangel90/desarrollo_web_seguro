@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -41,8 +42,10 @@ public class SongRESTController {
     }
 
     @PostMapping("/song")
-    public ResponseEntity<Song> create(@RequestBody Song song){
-        songService.addSong(song);
+    public ResponseEntity<Song> create(HttpServletRequest request, @RequestBody Song song){
+        String name= request.getUserPrincipal().getName();
+
+        songService.addSong(song,name);
         return new ResponseEntity<>(song, HttpStatus.CREATED);
     }
 

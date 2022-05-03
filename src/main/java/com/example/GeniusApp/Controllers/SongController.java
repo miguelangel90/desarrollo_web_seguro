@@ -48,8 +48,10 @@ public class SongController {
     }
 
     @PostMapping("/new/song")
-    public String addSong(Song song){
-        songService.addSong(song);
+    public String addSong(Song song, HttpServletRequest request){
+        String u=request.getUserPrincipal().getName();
+
+        songService.addSong(song,u);
         return "song_success";
     }
 
@@ -73,11 +75,20 @@ public class SongController {
     }
 
     @GetMapping("/songs/delete/{Sid}")
-    public String deleteSong(Model model,@PathVariable Long Sid){
+    public String deleteSong(Model model,HttpServletRequest request,@PathVariable Long Sid){
+        String name = request.getUserPrincipal().getName();
+        User u = userService.findByNameOrElseThrow(name);
         Song song = songService.getSong(Sid);
-        model.addAttribute("song",song);
-        songService.removeSongById(Sid);
-        return "delete_success";
+
+        if (u.getUsername().equals(song.getOwner())){
+
+            model.addAttribute("song",song);
+            songService.removeSongById(Sid);
+            return "delete_success";
+        }else{
+            return "Portal";
+        }
+
     }
 
     @GetMapping("/songs/update/{Sid}")
@@ -88,12 +99,15 @@ public class SongController {
     }
 
     @PostMapping("/new/lyrics/{Sid}")
-    public String update(Model model, @RequestParam String lyrics, @PathVariable Long Sid){
+    public String update(Model model,HttpServletRequest request, @RequestParam String lyrics, @PathVariable Long Sid){
         songService.updateLyrics(Sid,lyrics);
-        User user = userService.getLogueado();
+      //  User user = userService.getLogueado();
+        String name=request.getUserPrincipal().getName();
+        User user=userService.findByNameOrElseThrow(name);
+
         Song song = new Song(songService.getSong(Sid));
         song.addUser(user);
-        songService.addSong(song);
+        songService.addSong(song,user.getUsername());
         user.addSong(song);
         userService.addUser(user);
         model.addAttribute("song",song);

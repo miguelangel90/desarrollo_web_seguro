@@ -35,7 +35,7 @@ public class UserController {
     public String newUser(User user, String pass){
         if (userService.checkPassword(user,pass)){
             userService.addUser(user);
-            userService.setLogueado(user);
+           // userService.setLogueado(user);
             return "user_success";
         }else {
             return "Register";
@@ -52,8 +52,11 @@ public class UserController {
         return "login_success";
     }
 
+
+    /*
     @PostMapping("/login")
     public String loginSuccess(Model model, User user){
+        System.out.println("HOla");
         if (userService.checkUser(user)){
             User user2 = userService.getUserByUsernameAndPassword(user.getUsername(),user.getPassword());
             model.addAttribute("user", user2);
@@ -63,5 +66,5 @@ public class UserController {
         }else{
             return "login";
         }
-    }
+    }*/
 }

@@ -19,15 +19,16 @@ public class SongService {
 
     @Autowired
     CommentRepository commentRepository;
-
     @Autowired
     SongRepository songRepository;
-
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    UserService userService;
 
-    public void addSong(Song song){     // Stores a song in the holder, after giving it an id and date.
+    public void addSong(Song song, String creator){     // Stores a song in the holder, after giving it an id and date.
         song.addDate(new Date());
+        song.setOwner(creator);
         songRepository.save(song);
     }
     public List<Song> getAll(){

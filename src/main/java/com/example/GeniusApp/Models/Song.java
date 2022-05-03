@@ -31,6 +31,7 @@ public class Song {
     private String lyrics;
     private String url;     //URL to the song on YouTube
     private String date;
+    private String owner;
 
     @JsonView
     @ManyToMany
