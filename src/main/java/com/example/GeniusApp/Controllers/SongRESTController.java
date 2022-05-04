@@ -100,10 +100,15 @@ public class SongRESTController {
 
     @Transactional
     @DeleteMapping("/songsDeleteId/{id}")
-    public int deleteSong(@PathVariable long id) {
-        Query query = entityManager.createQuery
-                ("DELETE FROM Song s WHERE s.id = :id");
-        return query.setParameter("id", id).executeUpdate();
+    public int deleteSong(HttpServletRequest request, @PathVariable long id) {
+        Song song  = songService.getSong(id);
+        if (request.getUserPrincipal().getName().equals(song.getOwner()) || request.isUserInRole("ADMIN")){
+            Query query = entityManager.createQuery
+                    ("DELETE FROM Song s WHERE s.id = :id");
+            return query.setParameter("id", id).executeUpdate();
+        }else{
+            return 0;
+        }
     }
 
     @Transactional

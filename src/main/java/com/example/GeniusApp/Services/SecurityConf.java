@@ -4,6 +4,7 @@ package com.example.GeniusApp.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,6 +17,7 @@ import java.security.SecureRandom;
 
 @Configuration
 @EnableWebSecurity
+@Order(2)
 public class SecurityConf extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -73,11 +75,6 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        /*PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        auth.inMemoryAuthentication().withUser("user")
-                .password(encoder.encode("pass")).roles("USER");
-        auth.inMemoryAuthentication().withUser("admin")
-                .password(encoder.encode("adminpass")).roles("USER", "ADMIN");*/
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 }
