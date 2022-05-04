@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @Controller
 public class CommentController {
@@ -27,21 +29,24 @@ public class CommentController {
     CommentService commentService;
 
     @PostMapping("/new/comment/{songId}")
-    public String addComment(Model model, String comment, @PathVariable Long songId){
+    public String addComment(Model model, String comment, HttpServletRequest request, @PathVariable Long songId){
         Song song=songService.getSong(songId);
         model.addAttribute("song", song);
-        commentService.addComment(song, Sanitizers.FORMATTING.sanitize(comment));
+        commentService.addComment(song, Sanitizers.FORMATTING.sanitize(comment), request.getUserPrincipal().getName());
         return "comment_success";
     }
 
     @GetMapping("/Song/delete/{Sid}/{Cid}")
-    public String deleteComment(Model model,@PathVariable Long Sid,@PathVariable Long Cid){
+    public String deleteComment(Model model, HttpServletRequest request,@PathVariable Long Sid,@PathVariable Long Cid){
         Song song=songService.getSong(Sid);
-        commentService.removeComment(Cid, Sid);
-        model.addAttribute("song",song);
-        if (song.getComments()!=null){
-            if (!song.getComments().isEmpty()){
-                model.addAttribute("comment",song.getComments());
+        Comment c=commentService.getComment(Cid);
+        if (request.getUserPrincipal().getName().equals(c.getOwner()) || request.isUserInRole("ADMIN")){
+            commentService.removeComment(Cid, Sid);
+            model.addAttribute("song",song);
+            if (song.getComments()!=null){
+                if (!song.getComments().isEmpty()){
+                    model.addAttribute("comment",song.getComments());
+                }
             }
         }
         return "delete_comment";

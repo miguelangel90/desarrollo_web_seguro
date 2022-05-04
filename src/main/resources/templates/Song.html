@@ -21,12 +21,14 @@
         <p>Album: {{song.album}}</p>
         <form action="/songs/update/{{song.id}}" method="get" id="form">
             <p>Lyrics: {{song.lyrics}}</p>
-            <input type="submit" name="Delete" value="Actualizar">
+            <input type="submit" name="Update" value="Actualizar">
         </form>
         <p>Video: {{song.url}}</p>
         <p>Date: {{song.date}}</p>
     <p></p>
     <p></p>
+    </div>
+    <div id="comment_section">
     <label>Secci&oacuten de Comentarios</label>
     {{#comment}}
     <form action="/Song/delete/{{song.id}}/{{id}}" method="get">
@@ -43,7 +45,7 @@
 
 </div>
 <footer>
-    <a href="/songs">Volver al tabl&oacuten</a>
+    <a href="/songs"><button type="button" id="return_button">Volver al tabl&oacuten</button> </a>
 </footer>
   <script>
         ClassicEditor

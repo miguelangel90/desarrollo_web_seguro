@@ -14,7 +14,7 @@ h1{
 
 a{
     position: relative;
-    top: 280px;
+    top: 200px;
     left: 600px;
 }
 
@@ -84,7 +84,7 @@ button{
 
 #search{
     position: relative;
-    top: -400px;
+    top: -430px;
     left: 750px;
 
     background-image: linear-gradient(#9640fa, #623fcb);
@@ -97,4 +97,10 @@ button{
     font-family: Georgia;
     color: white;
     margin-left: 10px;
+}
+
+#logoutButton{
+    position: relative;
+    bottom: 400px;
+    left:200px;
 }

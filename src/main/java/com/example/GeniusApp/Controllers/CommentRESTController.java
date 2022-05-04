@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.List;
 
@@ -40,10 +41,10 @@ public class CommentRESTController {
     }
 
     @PostMapping("/songs/{id}")
-    public ResponseEntity<Comment> createComment(@PathVariable long id, @RequestBody Comment comment){
+    public ResponseEntity<Comment> createComment(HttpServletRequest request, @PathVariable long id, @RequestBody Comment comment){
         Song song = songService.getSong(id);
 
-        commentService.addComment(song,Sanitizers.FORMATTING.sanitize(comment.getText()));
+        commentService.addComment(song,Sanitizers.FORMATTING.sanitize(comment.getText()), request.getUserPrincipal().getName());
         return new ResponseEntity<>(comment, HttpStatus.CREATED);
     }
 
