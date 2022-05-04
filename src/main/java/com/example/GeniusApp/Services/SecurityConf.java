@@ -62,6 +62,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
 // Private pages (all other pages)
         http.authorizeRequests().antMatchers("/new/song").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/admin").hasAnyRole("ADMIN");
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/song").hasAnyRole("USER","ADMIN");
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/songsDeleteId/{id}").hasAnyRole("USER","ADMIN");
         http.authorizeRequests().anyRequest().authenticated();

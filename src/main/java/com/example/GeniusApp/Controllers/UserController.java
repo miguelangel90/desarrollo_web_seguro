@@ -1,5 +1,6 @@
 package com.example.GeniusApp.Controllers;
 
+import com.example.GeniusApp.Models.Song;
 import com.example.GeniusApp.Models.Users.User;
 
 import com.example.GeniusApp.Services.UserRepository;
@@ -10,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class UserController {
@@ -52,6 +55,25 @@ public class UserController {
         return "login_success";
     }
 
+
+    @GetMapping("/admin")
+    public String adminPage(Model model){
+
+        model.addAttribute("user",userService.getAll());
+        return "admin";
+    }
+
+    @GetMapping("/user/delete/{Uid}")
+    public String delete(Model model, HttpServletRequest request, @PathVariable long Uid){
+        User user = userService.getUser(Uid);
+
+        if (request.isUserInRole("ADMIN") && !user.getUsername().equals(request.getUserPrincipal().getName())){
+            userService.removeUser(Uid);
+            return "delete_success";
+        }else{
+            return "error";
+        }
+    }
 
     /*
     @PostMapping("/login")
