@@ -5,6 +5,7 @@ import com.example.GeniusApp.Models.Comment;
 import com.example.GeniusApp.Models.Song;
 import com.example.GeniusApp.Models.Users.User;
 import com.example.GeniusApp.Services.*;
+import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -77,16 +78,17 @@ public class SongController {
     @GetMapping("/songs/delete/{Sid}")
     public String deleteSong(Model model,HttpServletRequest request,@PathVariable Long Sid){
         String name = request.getUserPrincipal().getName();
+
         User u = userService.findByNameOrElseThrow(name);
         Song song = songService.getSong(Sid);
 
-        if (u.getUsername().equals(song.getOwner())){
+        if (u.getUsername().equals(song.getOwner()) || request.isUserInRole("ADMIN") ){
 
             model.addAttribute("song",song);
             songService.removeSongById(Sid);
             return "delete_success";
         }else{
-            return "Portal";
+            return "error";
         }
 
     }
@@ -100,7 +102,7 @@ public class SongController {
 
     @PostMapping("/new/lyrics/{Sid}")
     public String update(Model model,HttpServletRequest request, @RequestParam String lyrics, @PathVariable Long Sid){
-        songService.updateLyrics(Sid,lyrics);
+        songService.updateLyrics(Sid, Sanitizers.FORMATTING.sanitize(lyrics));
       //  User user = userService.getLogueado();
         String name=request.getUserPrincipal().getName();
         User user=userService.findByNameOrElseThrow(name);
@@ -109,7 +111,7 @@ public class SongController {
         song.addUser(user);
         songService.addSong(song,user.getUsername());
         user.addSong(song);
-        userService.addUser(user);
+        userService.updateUser(user);
         model.addAttribute("song",song);
         return "lyrics_success";
     }

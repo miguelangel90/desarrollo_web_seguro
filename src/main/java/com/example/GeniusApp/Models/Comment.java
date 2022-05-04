@@ -18,6 +18,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String text;
+    private String owner;
 
 
     public Comment(String comment){

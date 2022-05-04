@@ -24,15 +24,30 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /*
     public void init(){
         User u1 = new User("user", passwordEncoder.encode("pass"), "USER");
         userRepository.save(u1);
         userRepository.save(new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
-    }
+    }*/
 
     public void addUser(User user){
-        user = new User(user.getUsername(),passwordEncoder.encode(user.getPassword()),"USER");
-        this.registrados.add(user.getUsername());
+        if (userRepository.findByUsername(user.getUsername()).isEmpty()){
+            user = new User(user.getUsername(),passwordEncoder.encode(user.getPassword()),"USER");
+            this.registrados.add(user.getUsername());
+            userRepository.save(user);
+        }
+    }
+
+    public void addAdmin(User user){
+       if (userRepository.findByUsername(user.getUsername()).isEmpty()){
+           user = new User(user.getUsername(),passwordEncoder.encode(user.getPassword()),"USER","ADMIN");
+           this.registrados.add(user.getUsername());
+           userRepository.save(user);
+       }
+    }
+
+    public void updateUser(User user){
         userRepository.save(user);
     }
 
