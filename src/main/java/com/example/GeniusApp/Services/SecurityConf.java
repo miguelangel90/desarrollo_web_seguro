@@ -5,10 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,7 +19,7 @@ import java.security.SecureRandom;
 
 @Configuration
 @EnableWebSecurity
-@Order(2)
+
 public class SecurityConf extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -38,7 +40,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/Song/{num}").permitAll();
         http.authorizeRequests().antMatchers("/new/user").permitAll();
         http.authorizeRequests().antMatchers("/login").permitAll();
-
+        http.authorizeRequests().antMatchers("/songs/search").permitAll();
         // Css templates
         http.authorizeRequests().antMatchers("/css/delete.css").permitAll();
         http.authorizeRequests().antMatchers("/css/ErrorStyle.css").permitAll();
@@ -60,6 +62,8 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
 // Private pages (all other pages)
         http.authorizeRequests().antMatchers("/new/song").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/song").hasAnyRole("USER","ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/songsDeleteId/{id}").hasAnyRole("USER","ADMIN");
         http.authorizeRequests().anyRequest().authenticated();
 
 // Login form
@@ -71,7 +75,12 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
 // Disable CSRF at the moment
         http.csrf().disable();
-      }
+
+        //api rest
+
+        http.httpBasic();
+    }
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
