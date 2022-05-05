@@ -27,6 +27,8 @@ class CSRFHandlerInterceptor implements HandlerInterceptor {
             if (token != null) {
                 modelAndView.addObject("token", token.getToken());
             }
+        }else{
+            response.setStatus(200);
         }
     }
 
