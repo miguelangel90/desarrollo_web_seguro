@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -53,6 +54,12 @@ public class UserController {
     @GetMapping("/login_success")
     public String success(){
         return "login_success";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) throws ServletException {
+        request.logout();
+        return "Start";
     }
 
 

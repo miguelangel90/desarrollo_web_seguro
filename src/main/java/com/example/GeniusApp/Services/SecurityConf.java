@@ -14,7 +14,14 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.security.SecureRandom;
 
 @Configuration
@@ -74,13 +81,17 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         http.formLogin().defaultSuccessUrl("/login_success");
         http.formLogin().failureUrl("/loginerror");
 
+        http.logout().logoutUrl("/logout");
+        http.logout().logoutSuccessUrl("/");
+
 // Disable CSRF at the moment
-        http.csrf().disable();
+        //http.csrf().disable();
 
         //api rest
 
         http.httpBasic();
     }
+
 
 
     @Override
