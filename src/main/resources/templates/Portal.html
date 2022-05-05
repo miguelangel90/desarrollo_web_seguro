@@ -20,10 +20,11 @@
 
             <form action="/songs/delete/{{id}}" method="get" id="form">
 
-
                 <a href="/Song/{{id}}" id="songs">
                     {{name}} {{author}}
                 </a>
+
+                <input type="hidden" name="_csrf" value="{{token}}">
                 <input type="submit" name="Delete" value="Eliminar">
             </form>
 
@@ -44,6 +45,8 @@
                 <input type="text" name="author"></p>
             <p><label>Album:</label>
                 <input type="text" name="album"></p>
+
+            <input type="hidden" name="_csrf" value="{{token}}">
             <input type="submit" value="Buscar">
         </div>
     </form>
