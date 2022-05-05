@@ -3,6 +3,7 @@ package com.example.GeniusApp.Models.Users;
 import com.example.GeniusApp.Models.Comment;
 import com.example.GeniusApp.Models.Song;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.*;
+import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,12 +31,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String username;
+    @JsonIgnore
     private String password;
 
     @JsonIgnore
     @ManyToMany
     private List<Song> songs = new ArrayList<>();
 
+    @JsonIgnore
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 

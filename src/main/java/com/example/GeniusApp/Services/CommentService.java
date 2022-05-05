@@ -65,7 +65,8 @@ public class CommentService {
     }
 
     public void addComment(Song song, String comment, String userName){
-        Comment c = new Comment(comment);
+        Comment c = new Comment();
+        c.setText(comment);
         c.setOwner(userName);
         song.getComments().add(c);
         commentRepository.save(c);

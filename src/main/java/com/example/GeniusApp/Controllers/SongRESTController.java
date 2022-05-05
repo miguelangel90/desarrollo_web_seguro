@@ -215,7 +215,7 @@ public class SongRESTController {
         return query.setParameter("url", url).executeUpdate();
     }
 
-    @Transactional
+    /*@Transactional
     @PutMapping("/songsUpdateLyrics/{lyrics}")
     public int updateSongLyrics(@PathVariable String lyrics, @RequestBody Song updatedSong) {
         String nombre = updatedSong.getName();
@@ -228,6 +228,16 @@ public class SongRESTController {
         query.setParameter("album", album);
         query.setParameter("url", url);
         query.setParameter("autor", autor);
+        return query.setParameter("lyrics", lyrics).executeUpdate();
+    }*/
+
+    @Transactional
+    @PutMapping("/songsUpdateLyrics/{id}")
+    public int updateLyrics(@PathVariable long id, @RequestBody Song updatedSong) {
+        String lyrics = updatedSong.getLyrics();
+        Query query = entityManager.createQuery
+                ("update Song s SET s.lyrics = :lyrics WHERE s.id = :id");
+        query.setParameter("id", id);
         return query.setParameter("lyrics", lyrics).executeUpdate();
     }
 }

@@ -24,13 +24,6 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    /*
-    public void init(){
-        User u1 = new User("user", passwordEncoder.encode("pass"), "USER");
-        userRepository.save(u1);
-        userRepository.save(new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
-    }*/
-
     public void addUser(User user){
         if (userRepository.findByUsername(user.getUsername()).isEmpty()){
             user = new User(user.getUsername(),passwordEncoder.encode(user.getPassword()),"USER");
@@ -51,12 +44,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-    /*public User getLogueado(){
-        return logueado;
-    }
-    public void setLogueado(User user){
-        logueado=user;
-    }*/
     public List<User> getAll(){
         return userRepository.findAll();
     }

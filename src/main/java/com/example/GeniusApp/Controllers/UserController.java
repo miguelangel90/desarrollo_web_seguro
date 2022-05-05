@@ -23,12 +23,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    /*@PostConstruct
-    public void init(){
-        User u1 = new User("username", "pass");
-        userService.addUser(u1);
-    }*/
-
     @GetMapping("/new/user")
     public String register(){
         return "Register";
@@ -38,7 +32,6 @@ public class UserController {
     public String newUser(User user, String pass){
         if (userService.checkPassword(user,pass)){
             userService.addUser(user);
-           // userService.setLogueado(user);
             return "user_success";
         }else {
             return "Register";
