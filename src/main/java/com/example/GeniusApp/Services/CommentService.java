@@ -25,10 +25,12 @@ public class CommentService {
     @Autowired
     SongRepository songRepository;
 
+
+    /*
     public void addComment(Song song, Comment comment){
         song.getComments().add(comment);
         commentRepository.save(comment);
-    }
+    }*/
 
     public List<Comment> getComments(Song song){
         List<Comment> comments = song.getComments();
@@ -62,8 +64,10 @@ public class CommentService {
         commentRepository.deleteByText(text);
     }
 
-    public void addComment(Song song, String comment){
-        Comment c = new Comment(comment);
+    public void addComment(Song song, String comment, String userName){
+        Comment c = new Comment();
+        c.setText(comment);
+        c.setOwner(userName);
         song.getComments().add(c);
         commentRepository.save(c);
     }

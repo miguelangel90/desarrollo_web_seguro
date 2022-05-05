@@ -3,6 +3,7 @@ package com.example.GeniusApp.Services;
 
 import com.example.GeniusApp.Models.Users.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -15,23 +16,34 @@ import java.util.Set;
 public class UserService {
 
     private Set<String> registrados = new HashSet<>();
-    private User logueado;
+    //private User logueado;
 
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public void addUser(User user){
-        this.registrados.add(user.getUsername());
+        if (userRepository.findByUsername(user.getUsername()).isEmpty()){
+            user = new User(user.getUsername(),passwordEncoder.encode(user.getPassword()),"USER");
+            this.registrados.add(user.getUsername());
+            userRepository.save(user);
+        }
+    }
+
+    public void addAdmin(User user){
+       if (userRepository.findByUsername(user.getUsername()).isEmpty()){
+           user = new User(user.getUsername(),passwordEncoder.encode(user.getPassword()),"USER","ADMIN");
+           this.registrados.add(user.getUsername());
+           userRepository.save(user);
+       }
+    }
+
+    public void updateUser(User user){
         userRepository.save(user);
     }
 
-    public User getLogueado(){
-        return logueado;
-    }
-
-    public void setLogueado(User user){
-        logueado=user;
-    }
     public List<User> getAll(){
         return userRepository.findAll();
     }
@@ -73,6 +85,10 @@ public class UserService {
         }else{
             return false;
         }
+    }
+
+    public User findByNameOrElseThrow(String name){
+        return userRepository.findByUsername(name).orElseThrow();
     }
 
 }

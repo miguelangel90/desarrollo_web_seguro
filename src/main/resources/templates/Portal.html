@@ -12,6 +12,7 @@
     <a href="/new/song"><button type="button">Subir una canci&oacuten</button></a>
     <a href="/"><button type="button">Volver a la pagina de inicio</button></a>
 
+
     <section id="content">
         <h1>Canciones del portal</h1>
 
@@ -19,16 +20,18 @@
 
             <form action="/songs/delete/{{id}}" method="get" id="form">
 
-
                 <a href="/Song/{{id}}" id="songs">
                     {{name}} {{author}}
                 </a>
+
+                <input type="hidden" name="_csrf" value="{{token}}">
                 <input type="submit" name="Delete" value="Eliminar">
             </form>
 
         {{/song}}
-
-
+<!--
+        <a href="/pruebaRoles">roles</a>
+-->
     </section>
 
 </div>
@@ -42,9 +45,13 @@
                 <input type="text" name="author"></p>
             <p><label>Album:</label>
                 <input type="text" name="album"></p>
+
+            <input type="hidden" name="_csrf" value="{{token}}">
             <input type="submit" value="Buscar">
         </div>
     </form>
+<a href="/logout"><button type="button" id="logoutButton">Cerrar Sesi&oacuten</button> </a>
+<a href="/admin"><button type="button" id="adminButton">P&aacutegina privada</button> </a>
 
 <a href="/logout">Cerrar Sesi&oacuten</a>
 

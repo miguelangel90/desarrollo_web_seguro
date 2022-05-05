@@ -16,10 +16,13 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
+
 @RestController
+@RequestMapping("/api")
 public class SongRESTController {
     @Autowired
     SongService songService;
@@ -41,8 +44,10 @@ public class SongRESTController {
     }
 
     @PostMapping("/song")
-    public ResponseEntity<Song> create(@RequestBody Song song){
-        songService.addSong(song);
+    public ResponseEntity<Song> create(HttpServletRequest request, @RequestBody Song song){
+        String name= request.getUserPrincipal().getName();
+
+        songService.addSong(song,name);
         return new ResponseEntity<>(song, HttpStatus.CREATED);
     }
 
@@ -97,10 +102,15 @@ public class SongRESTController {
 
     @Transactional
     @DeleteMapping("/songsDeleteId/{id}")
-    public int deleteSong(@PathVariable long id) {
-        Query query = entityManager.createQuery
-                ("DELETE FROM Song s WHERE s.id = :id");
-        return query.setParameter("id", id).executeUpdate();
+    public int deleteSong(HttpServletRequest request, @PathVariable long id) {
+        Song song  = songService.getSong(id);
+        if (request.getUserPrincipal().getName().equals(song.getOwner()) || request.isUserInRole("ADMIN")){
+            Query query = entityManager.createQuery
+                    ("DELETE FROM Song s WHERE s.id = :id");
+            return query.setParameter("id", id).executeUpdate();
+        }else{
+            return 0;
+        }
     }
 
     @Transactional
@@ -207,7 +217,7 @@ public class SongRESTController {
         return query.setParameter("url", url).executeUpdate();
     }
 
-    @Transactional
+    /*@Transactional
     @PutMapping("/songsUpdateLyrics/{lyrics}")
     public int updateSongLyrics(@PathVariable String lyrics, @RequestBody Song updatedSong) {
         String nombre = updatedSong.getName();
@@ -220,6 +230,16 @@ public class SongRESTController {
         query.setParameter("album", album);
         query.setParameter("url", url);
         query.setParameter("autor", autor);
+        return query.setParameter("lyrics", lyrics).executeUpdate();
+    }*/
+
+    @Transactional
+    @PutMapping("/songsUpdateLyrics/{id}")
+    public int updateLyrics(@PathVariable long id, @RequestBody Song updatedSong) {
+        String lyrics = updatedSong.getLyrics();
+        Query query = entityManager.createQuery
+                ("update Song s SET s.lyrics = :lyrics WHERE s.id = :id");
+        query.setParameter("id", id);
         return query.setParameter("lyrics", lyrics).executeUpdate();
     }
 }

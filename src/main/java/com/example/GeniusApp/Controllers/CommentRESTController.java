@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class CommentRESTController {
 
     @Autowired
@@ -40,10 +42,9 @@ public class CommentRESTController {
     }
 
     @PostMapping("/songs/{id}")
-    public ResponseEntity<Comment> createComment(@PathVariable long id, @RequestBody Comment comment){
+    public ResponseEntity<Comment> createComment(HttpServletRequest request, @PathVariable long id, @RequestBody Comment comment){
         Song song = songService.getSong(id);
-
-        commentService.addComment(song,Sanitizers.FORMATTING.sanitize(comment.getText()));
+        commentService.addComment(song,Sanitizers.FORMATTING.sanitize(comment.getText()), request.getUserPrincipal().getName());
         return new ResponseEntity<>(comment, HttpStatus.CREATED);
     }
 
@@ -61,12 +62,17 @@ public class CommentRESTController {
 
     @Transactional
     @DeleteMapping("/songs/{sid}/{cid}")
-    public void deleteComment(@PathVariable long sid, @PathVariable long cid) {
+    public int deleteComment(HttpServletRequest request, @PathVariable long sid, @PathVariable long cid) {
         Song song = songService.getSong(sid);
         Comment comment = commentService.getComment(cid);
-        song.getComments().size();
-        song.getComments().remove(comment);
-        commentService.removeComment(cid,sid);
+        if (request.getUserPrincipal().getName().equals(comment.getOwner()) || request.isUserInRole("ADMIN")){
+            song.getComments().size();
+            song.getComments().remove(comment);
+            commentService.removeComment(cid,sid);
+            return 1;
+        }else{
+            return 0;
+        }
     }
 
     @Transactional

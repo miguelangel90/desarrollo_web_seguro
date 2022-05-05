@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/portalstyle.css">
+    <title>Genius</title>
+</head>
+<body>
+
+<div id="container">
+    <a href="/"><button type="button">Volver a la pagina de inicio</button></a>
+
+
+    <section id="content">
+        <h1>Usuarios del portal</h1>
+
+        {{#user}}
+
+        <form action="/user/delete/{{id}}" method="get" id="form">
+
+
+            <p>{{id}} {{username}} {{roles}}</p>
+            <input type="hidden" name="_csrf" value="{{token}}">
+            <input type="submit" name="Delete" value="Eliminar">
+        </form>
+
+        {{/user}}
+
+    </section>
+
+</div>
+
+
+</body>
+</html>

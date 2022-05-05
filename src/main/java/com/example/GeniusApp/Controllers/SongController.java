@@ -5,12 +5,14 @@ import com.example.GeniusApp.Models.Comment;
 import com.example.GeniusApp.Models.Song;
 import com.example.GeniusApp.Models.Users.User;
 import com.example.GeniusApp.Services.*;
+import org.owasp.html.Sanitizers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +31,7 @@ public class SongController {
 
     @GetMapping("")
     public String start(){
+        //userService.init();
         return "Start";
     }
 
@@ -46,8 +49,10 @@ public class SongController {
     }
 
     @PostMapping("/new/song")
-    public String addSong(Song song){
-        songService.addSong(song);
+    public String addSong(Song song, HttpServletRequest request){
+        String u=request.getUserPrincipal().getName();
+
+        songService.addSong(song,u);
         return "song_success";
     }
 
@@ -71,11 +76,21 @@ public class SongController {
     }
 
     @GetMapping("/songs/delete/{Sid}")
-    public String deleteSong(Model model,@PathVariable Long Sid){
+    public String deleteSong(Model model,HttpServletRequest request,@PathVariable Long Sid){
+        String name = request.getUserPrincipal().getName();
+
+        User u = userService.findByNameOrElseThrow(name);
         Song song = songService.getSong(Sid);
-        model.addAttribute("song",song);
-        songService.removeSongById(Sid);
-        return "delete_success";
+
+        if (u.getUsername().equals(song.getOwner()) || request.isUserInRole("ADMIN") ){
+
+            model.addAttribute("song",song);
+            songService.removeSongById(Sid);
+            return "delete_success";
+        }else{
+            return "error";
+        }
+
     }
 
     @GetMapping("/songs/update/{Sid}")
@@ -86,15 +101,25 @@ public class SongController {
     }
 
     @PostMapping("/new/lyrics/{Sid}")
-    public String update(Model model, @RequestParam String lyrics, @PathVariable Long Sid){
-        songService.updateLyrics(Sid,lyrics);
-        User user = userService.getLogueado();
+    public String update(Model model,HttpServletRequest request, @RequestParam String lyrics, @PathVariable Long Sid){
+        songService.updateLyrics(Sid, Sanitizers.FORMATTING.sanitize(lyrics));
+      //  User user = userService.getLogueado();
+        String name=request.getUserPrincipal().getName();
+        User user=userService.findByNameOrElseThrow(name);
+
         Song song = new Song(songService.getSong(Sid));
         song.addUser(user);
-        songService.addSong(song);
+        songService.addSong(song,user.getUsername());
         user.addSong(song);
-        userService.addUser(user);
+        userService.updateUser(user);
         model.addAttribute("song",song);
         return "lyrics_success";
+    }
+
+    @GetMapping("/pruebaRoles")
+    public String roles(Model model, HttpServletRequest request){
+        model.addAttribute("username", request.getUserPrincipal().getName());
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
+        return "prueba_roles";
     }
 }
