@@ -49,8 +49,8 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/login").permitAll();
         http.authorizeRequests().antMatchers("/songs/search").permitAll();
 
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/allsongs").permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/songs/{id}/allcomments").permitAll();
+        /*http.authorizeRequests().antMatchers(HttpMethod.GET, "/allsongs").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/songs/{id}/allcomments").permitAll();*/
         // Css templates
         http.authorizeRequests().antMatchers("/css/delete.css").permitAll();
         http.authorizeRequests().antMatchers("/css/ErrorStyle.css").permitAll();
@@ -72,13 +72,6 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
 // Private pages (all other pages)
         http.authorizeRequests().antMatchers("/admin").hasAnyRole("ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/song").hasAnyRole("USER","ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/songsDeleteId/{id}").hasAnyRole("USER","ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/songsUpdateLyrics/{id}").hasAnyRole("USER","ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/songs/{id}").hasAnyRole("USER","ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/songs/{sid}/{cid}").hasAnyRole("USER","ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/userDelete/{id}").hasAnyRole("ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/allusers").hasAnyRole("ADMIN");
         http.authorizeRequests().anyRequest().authenticated();
 
 // Login form

@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class UserRESTController {
 
     @Autowired
@@ -39,6 +40,11 @@ public class UserRESTController {
         userService.addUser(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
+
+    /*@PostMapping("userlogin")
+    public ResponseEntity<User> login(@RequestBody User user){
+
+    }*/
 
     @GetMapping("/users/{id}")
     public User getUser(@PathVariable long id) {

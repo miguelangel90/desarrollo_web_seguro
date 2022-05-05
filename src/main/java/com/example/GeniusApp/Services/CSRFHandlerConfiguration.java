@@ -1,6 +1,7 @@
 package com.example.GeniusApp.Services;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,7 +29,6 @@ class CSRFHandlerInterceptor implements HandlerInterceptor {
                 modelAndView.addObject("token", token.getToken());
             }
         }else{
-            response.setStatus(200);
         }
     }
 
